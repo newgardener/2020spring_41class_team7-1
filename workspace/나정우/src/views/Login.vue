@@ -1,0 +1,37 @@
+<template>
+  <div>
+    <h1>Login</h1>
+    <router-link class="routerLink" to="/main">
+        <v-btn 
+          icon 
+          width="auto" 
+          height="auto"  
+          class="ma-1"
+          @click="login"
+        >
+          <v-avatar size="90">
+          <img src="../assets/ComparewiseLOGO.jpg">
+          </v-avatar>
+        </v-btn>  
+    </router-link>  
+  </div>
+</template>
+
+<script>
+import { eventBus } from "../main"
+
+export default {
+  data() {
+    return {
+      isTrue: true
+    }
+  },
+  methods: {
+    login() {
+      
+      console.log('보냈어'),
+      eventBus.$emit("loginTrue", this.isTrue)
+    }
+  }
+}
+</script>
