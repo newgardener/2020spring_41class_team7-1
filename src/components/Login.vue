@@ -6,7 +6,6 @@
             width="auto" 
             height="auto"  
             class="ma-1"
-            @click="login"
             >
             <v-avatar size="90">
             <img src="../assets/ComparewiseLOGO.jpg">
@@ -19,8 +18,8 @@
                     <v-card-title primary-title>
                         <div>
                             <form>
-                                <input type="text" v-model="userInfo.email" placeholder="email" width="100%"> <br />
-                                <input type="password" v-model="userInfo.password" placeholder="password" width="100%"> <br />
+                                <input type="text" v-model="userInfo.email" required placeholder="email" width="100%"> <br />
+                                <input type="password" v-model="userInfo.password" required placeholder="password" width="100%"> <br />
                             </form>
                         </div>
                     </v-card-title>
@@ -49,8 +48,9 @@ export default {
                 email: '',
                 password: ''
             },
+            isTrue: false,
             idTrue: false,
-            pwdTrue: false
+            pwdTrue: false,
         }
     },
     methods: {
@@ -60,6 +60,9 @@ export default {
             }).then(function(data){
                 for (let key in data) {
                     if (data[key].email == this.userInfo.email && data[key].password == this.userInfo.password) {
+                        this.isTrue = true;
+                        this.idTrue = true;
+                        this.pwdTrue = true;
                         eventBus.$emit("loginTrue", this.isTrue);
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');

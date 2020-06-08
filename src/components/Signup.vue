@@ -17,16 +17,22 @@
                 <v-card>
                     <v-img src="../assets/signupLogo.png" width="500px"></v-img>
                     <v-card-title primary-title>
-                        <div>
+                        <div class="text-center">
                             <form>
-                                <input type="text" v-model="userInfo.name" placeholder="name" width="100%"> <br />
-                                <input type="text" v-model="userInfo.nickname" placeholder="nickname" width="100%"> <br />
-                                <input type="text" v-model="userInfo.email" placeholder="email" width="100%"> <br />
-                                <input type="password" v-model="userInfo.password" placeholder="password" width="100%"> <br />
-                                <input type="password" v-model="passwordConfirmation" placeholder="password confirmation" width="100%"> <br />
+                                <input type="text" v-model="form.name" required placeholder="name" width="100%"> <br />
+                                <input type="text" v-model="form.nickname" required placeholder="nickname" width="100%"> <br />
+                                <input id="emailform" type="text" v-model="form.email" required placeholder="email" width="70%"> 
+                                <v-btn class="ma-2" color="secondary" @click="checkId" width="30%">Check Email</v-btn>
+                                <input type="password" v-model="form.password" required placeholder="password" width="100%"> <br />
+                                <input type="password" v-model="passwordConfirmation" required placeholder="password confirmation" width="100%"> <br />
                             </form>
                         </div>
                     </v-card-title>
+                    <div v-if="checkId">
+                    <div v-bind:value="{ idError: true }"></div>
+                    </div>
+                    
+                    
 
                     <v-card-actions class="justify-center">
                         <v-btn color="blue" width="100%" height="50px" style="font-size: 20px">
@@ -56,48 +62,48 @@ export default {
     name: 'signUp',
     data() {
         return {
-            userInfo: {
+            form: {
                 name: '',
                 nickname: '',
                 password: '',
                 email: ''
             },
             passwordConfirmation: '',
-            idChecked: false,
             idError: false,
             passwordError: false,
             submitted: false,
-
         }
     },
     methods: {
+        post: function() {
+            if (!this.form.name || !this.form.nickname || !this.form.password || !this.form.email) {
+                alert('Error: You have some missing input. Please check again.');
+            }
+            else if (this.form.password != this.passwordConfirmation) {
+                this.passwordError = true;
+                alert('Error: password is not identical!');
+            } 
+            else {
+                this.$http.post('https://comparewise.firebaseio.com/user.json', this.form).then(function(data){
+                this.submitted = true;
+                alert('Successfully signed up');
+            })
+            }
+
+        }, 
         checkId: function() {
             this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
                 return data.json();
             }).then(function(data){
                 for (let key in data) {
-                    if (data[key].email == this.userInfo.email) {
+                    if (data[key].email == this.form.email) {
                         this.idError = true;
                     }
                 }
+                if (this.idError) {
+                    alert('Error: This id already exists. choose another one.')
+                }
             })
-            return this.idError
-        },
-        post: function() {
-            if (this.userInfo.password != this.passwordConfirmation) {
-                passwordError = true;
-                alert('Error: password is not identical!');
-            } else if (!checkId()) {
-                alert('Error: email already exists!');
-            }
-            else {
-                this.$http.post('https://comparewise.firebaseio.com/user.json', this.userInfo).then(function(data){
-                this.submitted = true;
-                alert('Successfully signed up');
-                this.$router.replace(this.$route.query.redirect || '/main');
-            })
-            }
-
         }
     }
 }
@@ -118,6 +124,11 @@ export default {
     }
     form, input{
         width: 500px;
+    }
+    input#emailform{
+        width: 300px;
+        position: relative;
+        margin-right: 30px;
     }
 
 </style>
