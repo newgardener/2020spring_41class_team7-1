@@ -70,6 +70,7 @@ export default {
             },
             passwordConfirmation: '',
             idError: false,
+            nickError: false,
             passwordError: false,
             submitted: false,
         }
@@ -83,6 +84,10 @@ export default {
                 this.passwordError = true;
                 alert('Error: password is not identical!');
             } 
+            else if (this.form.nickError)
+            {
+                alert('Error: your nickname is not valid: another user uses this nickname. please choose other one.')
+            }
             else {
                 this.$http.post('https://comparewise.firebaseio.com/user.json', this.form).then(function(data){
                 this.submitted = true;
@@ -99,9 +104,15 @@ export default {
                     if (data[key].email == this.form.email) {
                         this.idError = true;
                     }
+                    if(data[key].nickname == this.form.nickname){
+                        this.nickError = true;
+                    }
                 }
                 if (this.idError) {
                     alert('Error: This id already exists. choose another one.')
+                }
+                else{
+                    alert('this id(emali) is valid for our service')
                 }
             })
         }
