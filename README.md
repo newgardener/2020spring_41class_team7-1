@@ -5,8 +5,9 @@
  
 ## <div id = "About_Project">프로젝트 소개</div>
 * 소프트웨어공학 개론 Team7 Project CompareWise
-![Alt text](CompareWise_Logo.png) {:.aligncenter}
-
+<center>
+![Alt text](CompareWise_Logo.png)
+</center>
 ### 설치방법
 + ~~~
 <pre>
