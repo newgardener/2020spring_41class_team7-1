@@ -7,8 +7,12 @@
 * 소프트웨어공학 개론 Team7 Project CompareWise
 
 ### 설치방법
-+ ~~~ <br>
++ ~~~
+'''
+npm ~~
+'''
 
++ ~~~
 '''
 npm ~~
 '''
