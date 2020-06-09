@@ -1,7 +1,12 @@
 # CompareWise
- * [팀 소개](#Members)
  * [프로젝트 소개](#About_Project)
+ * [팀 소개](#Members)
  * [문서 소개](#Documents)
+ 
+## <div id = "About_Project">프로젝트 소개</div>
+* 소프트웨어공학 개론 Team7 Project CompareWise
+
+
 ## <div id = "Members">팀 소개</div>
 ### 팀장
 + 오승진<br>
@@ -12,9 +17,6 @@
 + 신정원<br>
 + 신한솔<br>
 + 한승하<br>
-
-## <div id = "About_Project">프로젝트 소개</div>
-* 소프트웨어공학 개론 Team7 Project CompareWise
 
 ## <div id = "Documents">문서 소개</div>
 + /doc: 개발과정에 필요한 문서
