@@ -38,7 +38,7 @@
 <script>
 import firebase from 'firebase'
 import { eventBus } from "../main"
-
+import App from '../App.vue'
 
 export default {
     name: 'login',
@@ -64,8 +64,14 @@ export default {
                         this.idTrue = true;
                         this.pwdTrue = true;
                         eventBus.$emit("loginTrue", this.isTrue);
+                        alert(key)
+                        App.$setCookie("test", "test1234", 1);
+                        alert(getCookie("test"));
+                        deleteCookie("test");
+                        alert(getCookie("test"));
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');
+                        break;
                     } 
                     if (data[key].email == this.userInfo.email && data[key].password != this.userInfo.password){
                         this.idTrue = true;
