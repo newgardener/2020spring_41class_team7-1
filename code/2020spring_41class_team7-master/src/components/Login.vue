@@ -45,7 +45,8 @@ export default {
         return {
             userInfo: {
                 email: '',
-                password: ''
+                password: '',
+                nickname: ''
             },
             isTrue: false,
             idTrue: false,
@@ -78,11 +79,8 @@ export default {
                         this.idTrue = true;
                         this.pwdTrue = true;
                         eventBus.$emit("loginTrue", this.isTrue);
-                        alert(key)
-                        this.setCookie("test", "test1234", 1);
-                        alert(getCookie("test"));
-                        deleteCookie("test");
-                        alert(getCookie("test"));
+                        this.setCookie("email", data[key].email,1);
+                        this.setCookie("nick", data[key].nickname,1);
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');
                         break;

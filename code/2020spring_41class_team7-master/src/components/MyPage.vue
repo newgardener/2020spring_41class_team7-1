@@ -33,33 +33,25 @@ export default {
 
         }
     },
+    method: {
+      getCookie(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+         }
+    },
   created() {
-    eventBus.$on('loginTrue', isTrue => {
+    /*eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
-    })
-    this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
-                return data.json();
-            }).then(function(data){
-                var cookie = this.$cookies.get('user_key')
-                alert(cookie)
-                /*for (let key in data) {
-                  if(data[key]==cookie)
-                    var tar = data[key]
-                  
-                    var tmp =
-                      {
-                        src: tar.src,
-                        name: tar.item_name,
-                        id: tar.item_id,
-                        price: '5,000',
-                        reviewNum: '265',
-                        score: tar.avg_score
-                      }
-                      this.list.push(tmp)
-                    }*/
-            })
+    })*/
+    var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
+    var email = value? value[2] : null;
+    var value2 = document.cookie.match('(^|;) ?' + "nick" + '=([^;]*)(;|$)');
+    var nick = value2? value2[2] : null;
+    //var my_info = getCookie("email")//함수 보완해서 수정 중
+    alert(email)
+    alert(nick)
   
-  },
+  }
 
 }
 </script>
