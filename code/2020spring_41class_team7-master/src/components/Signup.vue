@@ -70,13 +70,14 @@ export default {
             },
             passwordConfirmation: '',
             idError: false,
-            nickError: false,
             passwordError: false,
             submitted: false,
         }
     },
     methods: {
         post: function() {
+            
+            
             if (!this.form.name || !this.form.nickname || !this.form.password || !this.form.email) {
                 alert('Error: You have some missing input. Please check again.');
             }
@@ -84,10 +85,6 @@ export default {
                 this.passwordError = true;
                 alert('Error: password is not identical!');
             } 
-            else if (this.form.nickError)
-            {
-                alert('Error: your nickname is not valid: another user uses this nickname. please choose other one.')
-            }
             else {
                 this.$http.post('https://comparewise.firebaseio.com/user.json', this.form).then(function(data){
                 this.submitted = true;
@@ -103,9 +100,6 @@ export default {
                 for (let key in data) {
                     if (data[key].email == this.form.email) {
                         this.idError = true;
-                    }
-                    if(data[key].nickname == this.form.nickname){
-                        this.nickError = true;
                     }
                 }
                 if (this.idError) {

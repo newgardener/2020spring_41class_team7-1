@@ -142,7 +142,7 @@
                         size="90%"
                         tile
                       >
-                        <img src="../assets/ComparewiseLOGO.jpg">
+                        <img :src=item.src>
                       </v-avatar>
                     </center>
                     
@@ -296,7 +296,8 @@ export default {
   },
   data() {
     return {
-      items: [
+      
+      items: [/*
         {
           src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
           name: 'Category1',
@@ -312,7 +313,7 @@ export default {
           price: '5,000',
           reviewNum: '265',
           score: 4.7
-        },
+        },*/
       ],
       listNum: 5,
       list: [],
@@ -324,12 +325,40 @@ export default {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
+    this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+
+                /*for(var i = 0; i< 10 ; i++)
+                {
+                  this.$http.post('https://comparewise.firebaseio.com/item.json',
+                   {
+                     avg_score: 4.1,
+                     category_id: 2,
+                     item_id: i,
+                     item_name: "아이템이름"+i,
+                     sales_volume: 5432,
+                     src: 'http://pocarisweat.co.kr/wp-content/uploads/2018/03/2018-%ED%8F%AC%EC%B9%B4%EB%A6%AC%EC%8A%A4%EC%9B%A8%ED%8A%B8-%EB%AA%A8%EB%8D%B8-%ED%8A%B8%EC%99%80%EC%9D%B4%EC%8A%A4-1024x768.jpg'
+                   }
+                   )
+                }*/
+                for (let key in data) {
+                    var tar = data[key]
+                  
+                    var tmp =
+                      {
+                        src: tar.src,
+                        name: tar.item_name,
+                        id: tar.item_id,
+                        price: '5,000',
+                        reviewNum: '265',
+                        score: tar.avg_score
+                      }
+                      this.list.push(tmp)
+                    }
+            })
     //make default item list
-    this.list.push(this.items[1])
-    this.list.push(this.items[1])
-    this.list.push(this.items[1])
-    this.list.push(this.items[1])
-    this.list.push(this.items[1])
+  
   },
   
 }
