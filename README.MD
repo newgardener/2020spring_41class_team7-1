@@ -1,7 +1,7 @@
 # CompareWise
  * [팀 소개](#Members)
  * [프로젝트 소개](#About_Project)
- * 
+ * [문서 소개](#Documents)
 ## <div id = "Members">팀 소개</div>
 ### 팀장
 + 오승진<br>
@@ -16,7 +16,7 @@
 ## <div id = "About_Project">프로젝트 소개</div>
 * 소프트웨어공학 개론 Team7 Project CompareWise
 
-## <div id = "Documents">문서 정리</div>
+## <div id = "Documents">문서 소개</div>
 + /doc: 개발과정에 필요한 문서
 > [Requirement Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/Comparewise_Requirement%20Specification.pdf)<br>
 > [Design Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/CompareWise_Design_Specification.pdf)<br>
