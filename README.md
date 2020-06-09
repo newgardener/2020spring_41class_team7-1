@@ -6,7 +6,7 @@
 ## <div id = "About_Project">프로젝트 소개</div>
 * 소프트웨어공학 개론 Team7 Project CompareWise
 
-<center><img src="CompareWise_Logo.png" width="300" height="300"></center>
+<center><img src="CompareWise_Logo.png" width="600" height="300"></center>
 
 
 ### 설치방법
