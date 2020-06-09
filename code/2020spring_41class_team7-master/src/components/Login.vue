@@ -38,7 +38,6 @@
 <script>
 import firebase from 'firebase'
 import { eventBus } from "../main"
-import App from '../App.vue'
 
 export default {
     name: 'login',
@@ -54,6 +53,21 @@ export default {
         }
     },
     methods: {
+       setCookie(name, value, day) {
+        var date = new Date();
+        date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
+        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+         },
+        getCookie(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+         },
+        deleteCookie(name) {
+        var date = new Date();
+        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+         },
+
+
         login() {
             this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
                 return data.json();
@@ -65,7 +79,7 @@ export default {
                         this.pwdTrue = true;
                         eventBus.$emit("loginTrue", this.isTrue);
                         alert(key)
-                        App.$setCookie("test", "test1234", 1);
+                        this.setCookie("test", "test1234", 1);
                         alert(getCookie("test"));
                         deleteCookie("test");
                         alert(getCookie("test"));
