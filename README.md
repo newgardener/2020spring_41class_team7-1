@@ -8,14 +8,18 @@
 
 ### 설치방법
 + ~~~
-'''
+<pre>
+<code>
 npm ~~
-'''
+</code>
+</pre>
 
 + ~~~
-'''
+<pre>
+<code>
 npm ~~
-'''
+</code>
+</pre>
 
 ### 라이선스
 + CompareWise의 라이센스는 MIT license로, <https://opensource.org/licenses/MIT> 에 있습니다.<br>
