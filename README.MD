@@ -1,30 +1,26 @@
-소프트웨어공학 개론 Team7 Project CompareWise
+# CompareWise
+ * [팀 소개](#Members)
+ * [프로젝트 소개](#About_Project)
+ * 
+## <div id = "Members">팀 소개</div>
+### 팀장
++ 오승진<br>
 
-/doc: 개발과정에 필요한 문서
+### 팀원
++ 나정우<br>
++ 박원호<br>
++ 신정원<br>
++ 신한솔<br>
++ 한승하<br>
 
-      -Requirement Specification(Last Update 2020.05.13)
-  
-  
-      -Design Specification(Last Update 2020.06.06)
+## <div id = "About_Project">프로젝트 소개</div>
+* 소프트웨어공학 개론 Team7 Project CompareWise
 
+## <div id = "Documents">문서 정리</div>
++ /doc: 개발과정에 필요한 문서
+> [Requirement Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/Comparewise_Requirement%20Specification.pdf)<br>
+> [Design Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/CompareWise_Design_Specification.pdf)<br>
 
-/code: 어플리케이션의 코드
++ /code: 어플리케이션 코드
 
-
-
-
-
-/workspace: 각자 담당한 부분 코드 공유
-
-
-        -/한승하
-  
-        -/신정원
-  
-        -/신한솔
-  
-        -/박원호
-  
-        -/나정우
-  
-        -/오승진
++ /workspace: 각자 담당한 부분 코드 공유
