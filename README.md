@@ -6,6 +6,15 @@
 ## <div id = "About_Project">프로젝트 소개</div>
 * 소프트웨어공학 개론 Team7 Project CompareWise
 
+### 설치방법
++ ~~~ <br>
+
+'''
+npm ~~
+'''
+
+### 라이선스
++ CompareWise의 라이센스는 MIT license로, <https://opensource.org/licenses/MIT> 에 있습니다.<br>
 
 ## <div id = "Members">팀 소개</div>
 ### 팀장
