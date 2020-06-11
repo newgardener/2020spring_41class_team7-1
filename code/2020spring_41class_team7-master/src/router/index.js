@@ -8,67 +8,79 @@ import Signup from '../components/Signup.vue'
 import MyPage from '../components/MyPage.vue'
 import WishList from '../components/WishList.vue'
 import Compare from '../components/Compare.vue'
+import Review from '../components/Review.vue'
+import Reviewwrite from '../components/Reviewwrite.vue'
 
 Vue.use(VueRouter)
 
 const requireAuth = (to, from, next) => {
-  if (Auth.loggedIn()) return next()
-  next({
-    path: '/login',
-    query: { redirect: to.fullPath }
-  })
+    if (Auth.loggedIn()) return next()
+    next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+    })
 }
 
-  const routes = [
-    {
-      path: '/main',
-      name: 'Main',
-      component: Main
+const routes = [{
+        path: '/main',
+        name: 'Main',
+        component: Main
     },
     {
-      path: '/itemdetail',
-      name: 'ItemDetail',
-      component: ItemDetail
+        path: '/itemdetail',
+        name: 'ItemDetail',
+        component: ItemDetail
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+        path: '/login',
+        name: 'Login',
+        component: Login
     },
     {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
+        path: '/signup',
+        name: 'Signup',
+        component: Signup
     },
     {
-      path: '/mypage',
-      name: 'MyPage',
-      component: MyPage
+        path: '/mypage',
+        name: 'MyPage',
+        component: MyPage
     },
     {
-      path: '/wishlist',
-      name: 'WishList',
-      component: WishList
+        path: '/wishlist',
+        name: 'WishList',
+        component: WishList
     },
     {
-      path: '/compare',
-      name: 'Compare',
-      component: Compare
+        path: '/compare',
+        name: 'Compare',
+        component: Compare
     },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    {
+        path: '/review',
+        name: 'Review',
+        component: Review
+    },
+    {
+        path: '/reviewwrite',
+        name: 'Reviewwrite',
+        component: Reviewwrite
+    },
+    {
+        path: '/about',
+        name: 'About',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router
