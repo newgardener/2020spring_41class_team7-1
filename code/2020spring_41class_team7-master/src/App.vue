@@ -112,17 +112,54 @@
 </template>
 
 <script>
-
+import Main from './components/Main';
+import { eventBus } from "./main"
 export default {
   name: 'App',
-
-  components: {
-
+  data() {
+    return {
+      drawer: false
+  }
+},
+  method: {
+        setCookie(name, value, day) {
+        var date = new Date();
+        date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
+        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+         },
+        getCookie(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+         },
+        deleteCookie(name) {
+        var date = new Date();
+        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+         },
+     logout()
+      {
+      this.deleteCookie("name")
+      this.deleteCookie("pw")
+      this.deleteCookie("nick")
+      this.deleteCookie("email")
+      this.$store.commit('loginFalse')
+      },
+    created()
+  {
+    eventBus.$on('loginTrue', isTrue => {
+      this.$store.commit('loginTrue')
+    })
+    if(this.getCookie("email"))
+    {
+      eventBus.$emit("loginTrue", this.isTrue);
+      alert('Successfully logged in');
+      this.$router.replace(this.$route.query.redirect || '/main');
+    }
+  }
   },
-
-  data: () => ({
-    drawer: false
-  }),
+  
+  
+  
+  
 };
 </script>
 

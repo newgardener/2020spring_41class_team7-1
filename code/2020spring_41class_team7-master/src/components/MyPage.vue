@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div><!---
     <v-app-bar
       color="amber"
       height="100px"
@@ -14,7 +14,7 @@
       <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
 
       <v-spacer></v-spacer>
-      
+--->      
             <!-- <router-link 
               class="routerLink" to="/wishlist"
               v-if="this.$store.state.isLogin"
@@ -24,7 +24,7 @@
               </v-btn>
             </router-link> -->
 
-      
+      <!---
       <router-link 
         class="routerLink" to="/mypage"
         v-if="this.$store.state.isLogin"
@@ -32,11 +32,12 @@
         <v-btn icon class="ma-2">
           <v-icon x-large>mdi-account-outline</v-icon>
         </v-btn>
-      </router-link>
-      
+      </router-link>--->
+      <!----
       <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
         Logout
       </v-btn>
+      
           
       <router-link 
         class="routerLink" to="/login"
@@ -55,6 +56,7 @@
           Signup
         </v-btn>
       </router-link>
+    -->
     </v-app-bar>
 
     <v-container>
@@ -109,7 +111,6 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
   
@@ -146,10 +147,10 @@ export default {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
-    var email = this.getCookie("email")//함수 보완해서 수정 중
-    var nick = this.getCookie("nick")//함수 보완해서 수정 중
-    var name = this.getCookie("name")//함수 보완해서 수정 중
-    var password = this.getCookie("pw")//함수 보완해서 수정 중
+    var email = this.getCookie("email")
+    var nick = this.getCookie("nick")   
+    var name = this.getCookie("name")  
+    var password = this.getCookie("pw")  
     console.log(email)
     this.name=name;
     this.email=email;
