@@ -35,8 +35,8 @@
       </div>
 
       <div class = "block" id = "second">
-        <div class = "b_in_b1">0</div><!-- 토큰 uid로 user DB 검색 -->
-        <div class = "b_in_b1">0</div><!-- 토큰 uid로 wishlist DB 검색 -->
+        <div class = "b_in_b1">리뷰를 작성한 상품 : {{review}}</div><!-- 토큰 uid로 user DB 검색 -->
+        <div class = "b_in_b1">위시리스트에 담긴 상품 : {{wish_list}}</div><!-- 토큰 uid로 wishlist DB 검색 -->
         <div class = "b_in_b1">0</div><!-- 토큰 uid로 review DB 검색 -->
         <div class = "b_in_b1">내 리뷰</div>
         <div class = "b_in_b1">관심상품</div>
@@ -103,10 +103,13 @@ export default {
                 password: '',
                 email: ''
             },
-
+          password:"",
           email: "",
           nick: "",
-          name: ""
+          name: "",
+          wish_list: 0,
+          review: 0,
+
         }
          
   },
@@ -132,10 +135,42 @@ export default {
     var name = this.getCookie("name")//함수 보완해서 수정 중
     var password = this.getCookie("pw")//함수 보완해서 수정 중
     console.log(email)
-   
     this.name=name;
+    this.email=email;
+    this.password=password; 
     this.nick=nick; 
     console.log(name)
+
+    this.$http.get('https://comparewise.firebaseio.com/WishList.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+              var cnt=0;
+                for (let key in data) {
+                  if (data[key]==null)
+                  {
+                    continue;
+                  }
+                  if(data[key].user_id==this.email)
+                  {
+                    this.wish_list=this.wish_list+1;
+                  }
+                }
+            });
+            this.$http.get('https://comparewise.firebaseio.com/Review.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+              var cnt=0;
+                for (let key in data) {
+                  if (data[key]==null)
+                  {
+                    continue;
+                  }
+                  if(data[key].user_id==this.email)
+                  {
+                    this.review=this.review+1;
+                  }
+                }
+            });
   }
  /*admin.auth().verifyIdToken(idToken)
   .then(function(decodedToken) {
