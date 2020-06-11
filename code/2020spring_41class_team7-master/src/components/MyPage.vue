@@ -30,9 +30,8 @@
     <v-container>
       <div class = "block" id = "first">
         <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="50px" data-height="50px"></span>
-        <p class="uemail">  </p>
-        (d)닉네임<!-- 토큰 uid로 user DB 검색 -->
-        (d)이름<id="uname" value="asd"><!-- 토큰 uid로 user DB 검색 -->
+      <div>   이름: {{name}}</div>
+      <div>   별명: {{nick}} </div>
       </div>
 
       <div class = "block" id = "second">
@@ -94,8 +93,9 @@
 
 <script>
 import firebase from 'firebase';
-
+import 'expose-loader?$!expose-loader?jQuery!jquery'
 export default {
+  
   data() {
     return {
             form: {
@@ -103,13 +103,20 @@ export default {
                 password: '',
                 email: ''
             },
+
+          email: "",
+          nick: "",
+          name: ""
         }
+         
   },
+  
   methods: {
-    getCookie(name) {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value? value[2] : null;
-         },
+    getCookie(name)
+        {
+          var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+          return value? value[2] : null;
+        }
   },
   mounted() {
       let recaptchaScript = document.createElement('script')
@@ -120,15 +127,14 @@ export default {
     /*eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })*/
-    var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
-    var email = value? value[2] : null;
-    var value2 = document.cookie.match('(^|;) ?' + "nick" + '=([^;]*)(;|$)');
-    var nick = value2? value2[2] : null;
-    //var my_info = getCookie("email")//함수 보완해서 수정 중
+    var email = this.getCookie("email")//함수 보완해서 수정 중
+    var nick = this.getCookie("nick")//함수 보완해서 수정 중
+    var name = this.getCookie("name")//함수 보완해서 수정 중
+    var password = this.getCookie("pw")//함수 보완해서 수정 중
     console.log(email)
-    alert(email)
-    $('.uemail').text(email);
-    name = nick
+   
+    this.name=name;
+    this.nick=nick; 
     console.log(name)
   }
  /*admin.auth().verifyIdToken(idToken)

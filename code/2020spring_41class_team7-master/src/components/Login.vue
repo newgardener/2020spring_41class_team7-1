@@ -81,6 +81,8 @@ export default {
                         eventBus.$emit("loginTrue", this.isTrue);
                         this.setCookie("email", data[key].email,1);
                         this.setCookie("nick", data[key].nickname,1);
+                        this.setCookie("pw", data[key].password,1);
+                        this.setCookie("name", data[key].name,1);
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');
                         break;
