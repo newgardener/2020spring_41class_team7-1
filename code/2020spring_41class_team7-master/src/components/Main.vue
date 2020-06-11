@@ -237,6 +237,10 @@ export default {
         var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
         return value? value[2] : null;
       },
+      deleteCookie(name) {
+        var date = new Date();
+        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+         },
     doSearch () {
       console.log(this.search)
       this.list = []
@@ -249,6 +253,10 @@ export default {
       return null
     },
     logout () {
+      this.deleteCookie("name")
+      this.deleteCookie("pw")
+      this.deleteCookie("nick")
+      this.deleteCookie("email")
       this.$store.commit('loginFalse')
     },
     dialogTrue () {
