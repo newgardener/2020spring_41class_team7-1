@@ -176,7 +176,7 @@
           <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse">
             <v-tooltip bottom>
               <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item.id)  class="ma-2">
+                    <v-btn icon v-on:click=Iscompare(item)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
               </template>
@@ -219,14 +219,18 @@ import { eventBus } from "../main"
 
 export default {
   methods: {
-    Iscompare(id){
+    Iscompare(item){
       if(this.compareID1 == 'defult'){
-          this.compareID1 = id;
+          this.compareID1 = item.id
+          this.compare_price1 = item.price
       }
       else{
-        this.compareID2 = id;
-        this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2 }})
+        this.compareID2 = item.id
+        this.compare_price2 = item.price
+        this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
       }
+      console.log(this.compareID1)
+      console.log(this.compare_price1)
     },
     itemCategory () {
       return null
@@ -312,6 +316,8 @@ export default {
       temp:'',
       compareID1:'defult',
       compareID2:'defult',
+      compare_price1:'defult',
+      compare_price2:'defult',
       search:"",
       sellers:[],
       items: [],
