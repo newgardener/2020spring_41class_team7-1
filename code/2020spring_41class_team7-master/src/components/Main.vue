@@ -1,123 +1,59 @@
 <template>
     <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-      <router-link class="routerLink" to="/main">
-        <v-btn icon width="auto" height="auto"  class="ma-1">
-          <v-avatar size="90">
-          <img src="../assets/logo.png">
-          </v-avatar>
-        </v-btn>  
-      </router-link>
-      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
 
-      <v-spacer></v-spacer>
-      
-            <!-- <router-link 
-              class="routerLink" to="/wishlist"
-              v-if="this.$store.state.isLogin"
-            >
-              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
-                <v-icon x-large>mdi-star-outline</v-icon>
-              </v-btn>
-            </router-link> -->
+    <!-- search bar -->
+    <template>
+      <v-toolbar
+        color="#FAFAFA" height="75px">
+          <v-text-field
+            append-icon = mdi-magnify
+            class="mx-4"
+            color="blue"
+            width="50%"
+            hide-details
+            v-model="search"
+            label="Search"
+            solo-inverted
+            @click:append="doSearch"
+            ></v-text-field>
 
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
+            <template v-slot:extension>
+              <v-tabs v-model="currentItem"
+                      fixed-tabs
+                      slide-color="blue">
+                <v-tab v-for="tab in tabs"
+                       :key="tab"
+                       @click="changeList(tab)">
+                       {{ tab }}
+                </v-tab>
 
-      <router-link 
-        class="routerLink" to="/signup"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Signup
-        </v-btn>
-      </router-link>
-    </v-app-bar>
+                <!-- <div class="text-center">
+                  <v-menu open-on-hover down offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn color="secondary"
+                             v-bind="attrs"
+                             v-on="on"
+                             style="padding: 15px 15px; width: 100px">
+                        랭킹 기간 설정
+                      </v-btn>
+                    </template>
 
-    <!-- 검색창 -->
-    <v-card
-      tile
-      color="amber lighten-3"
-      width="100%"
-      height="80px"
-    >
-    <v-row class="mx-3">
-      <v-text-field
-        full-width
-        outlined
-        clearable
-        v-model="search"
-        label="Search!"
-        class="my-3"
-        color="black"
-        append-icon = mdi-magnify
-        @click:append="doSearch"
-      >
-      </v-text-field>
-    </v-row>
-    </v-card>
+                    <v-list>
+                      <v-list-item
+                        v-for="time in sortByTime"
+                        :key="time"
+                        @click="changeList(time)">
+                        <v-list-item-title>{{ time }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </div> -->
 
-    <!-- 카테고리 및 랭킹 -->
-    <v-container class="mt-5" width="100%">
-      <v-row  width="100%" no-gutters>
-          <v-btn @click="changeList(1)" color="#E8EAF6" tile width="20%">
-            <span>생활용품</span>
-          </v-btn>
+              </v-tabs>
+            </template>   
+      </v-toolbar>
+    </template>
 
-          <v-btn @click="changeList(2)" color="#E8EAF6" tile width="20%">
-            <span>패션</span>
-          </v-btn>
-
-          <v-btn @click="changeList(3)" color="#E8EAF6" tile width="20%">
-            <span>뷰티</span>
-          </v-btn>
-
-          <v-btn @click="changeList(4)" color="#E8EAF6" tile width="20%">
-            <span>식품</span>
-          </v-btn>
-
-          <v-btn @click="changeList(5)" color="#E8EAF6" tile width="20%">
-            <span>가전제품</span>
-          </v-btn>
-      </v-row>
-      <v-row  width="100%" no-gutters>
-          <v-btn @click="changeList(6)" color="#E8EAF6" tile width="33.33%">
-            <span>Daily</span>
-          </v-btn>
-
-          <v-btn @click="changeList(7)" color="#E8EAF6" tile width="33.33%">
-            <span>Weekly</span>
-          </v-btn>
-
-          <v-btn @click="changeList(8)" color="#E8EAF6" tile width="33.34%">
-            <span>Monthly</span>
-          </v-btn>
-      </v-row>
-    </v-container>
-    
     <!-- 아이템 리스트 -->
     <v-container>
       <v-row>
@@ -127,7 +63,7 @@
         cols="12"
         >
           <router-link 
-            class="routerLink" v-bind:to="'/itemdetail/'+ item.id"
+            class="routerLink" to="/itemdetail"
           >
             <v-card flat tile color="#E8EAF6">
               <v-row>
@@ -144,7 +80,7 @@
                         size="90%"
                         tile
                       >
-                        <img :src=item.src>
+                        <img src="../assets/ComparewiseLOGO.jpg">
                       </v-avatar>
                     </center>
                     
@@ -185,12 +121,12 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <router-link class="routerLink" to="/Compare">
-                    <v-btn icon v-on="on" class="ma-2">
+                    <v-btn icon dark v-on="on" class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-                </router-link>
+                  </router-link>
               </template>
-              <span>Compare</span>
+              <span>Comprae Page</span>
           </v-tooltip>
 
           <v-tooltip bottom>
@@ -199,7 +135,7 @@
                 <v-btn icon color="amber" dark v-on="on" class="ma-2">
                   <v-icon x-large>mdi-star-circle</v-icon>
                 </v-btn>
-            </router-link>
+              </router-link>
             </template>
             <span>Wish List</span>
           </v-tooltip>
@@ -209,19 +145,15 @@
       </v-row>
     </v-container>
 
-    <v-footer class="pa-3">
+<!-- Footer -->
+    <!-- <v-footer class="pa-3">
       <v-spacer></v-spacer>
       <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-
-
+    </v-footer> -->
   </div>
 
 
 </template>
-
-
-
 
 
 <script>
@@ -232,15 +164,6 @@ export default {
     itemCategory () {
       return null
     },
-    getCookie(name)
-      {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value? value[2] : null;
-      },
-      deleteCookie(name) {
-        var date = new Date();
-        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
-         },
     doSearch () {
       console.log(this.search)
       this.list = []
@@ -273,79 +196,62 @@ export default {
         for(var j=0; j<this.sellers.length; j++){  
           if(this.sellers[j].item_id==this.items[i].id){
             if(this.sellers[j].cost < min_cost)
-              min_cost = this.sellers[j].cost
+                min_cost = this.sellers[j].cost
           } 
         }
         this.items[i].price = min_cost
       }
     },
-    changeList (num) {
+    changeList (name) {
       this.list = []
-      this.listNum = num
-      if(this.listNum==1){
+      this.categoryName = name
+      if(this.categoryName=='생활용품'){
         for(var i=0; i<this.items.length; i++) {
           if(this.items[i].category_id==1)
             this.list.push(this.items[i])
         }  
       }
-      else if(this.listNum==2){
+      else if(this.categoryName=='패션'){
         for(var i=0; i<this.items.length; i++) {
           if(this.items[i].category_id==2)
             this.list.push(this.items[i])
         }  
       }
-      else if(this.listNum==3){
+      else if(this.categoryName=='뷰티'){
         for(var i=0; i<this.items.length; i++) {
           if(this.items[i].category_id==3)
             this.list.push(this.items[i])
         }  
       }
-      else if(this.listNum==4){
+      else if(this.categoryName=='식품'){
         for(var i=0; i<this.items.length; i++) {
           if(this.items[i].category_id==4)
             this.list.push(this.items[i])
         }  
       }
-      else if(this.listNum==5){
+      else if(this.categoryName=='가전제품'){
         for(var i=0; i<this.items.length; i++) {
           if(this.items[i].category_id==5)
             this.list.push(this.items[i])
         }  
-      }
-      //do not need category_id
-      else if(this.listNum==6){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-      }
-      else if(this.listNum==7){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-      }
-      else if(this.listNum==8){
-        for(var i=0; i<this.items.length; i++) {
-          this.list.push(this.items[i]);
-        }   
       }
     }
   },
   data() {
     return {
       search:"",
+      currentItem: 'tab-Web',
+      tabs: ['생활용품', '패션', '뷰티', '식품', '가전제품'],
+      sortByTime: ['Daily', 'Weekly', 'Monthly'],
       sellers:[],
       items: [],
       listNum: 8,
+      categoryName: '',
       list: [],
       //to open dialog
       dialog: false,
+      drawer: false,
+      tab: null
     }
   },
   created() {
@@ -355,8 +261,8 @@ export default {
     if(this.getCookie("email"))
     {
       eventBus.$emit("loginTrue", this.isTrue);
-    alert('Successfully logged in');
-    this.$router.replace(this.$route.query.redirect || '/main');
+      alert('Successfully logged in');
+      this.$router.replace(this.$route.query.redirect || '/main');
     }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
@@ -407,20 +313,19 @@ export default {
   beforeUpdate(){
     this.getPrice()
   }
+  
 }
-/*문제
-1: default list 표현
-2: db 변경 필요
-3: daily weekly monthly
-4: total score 수치 변경 필요
-*/
+
 </script>
 
 
 
 
-<style>
+<style scoped>
   .routerLink {
     text-decoration: none;
+  }
+  .v-input__control{
+    width: 70%;
   }
 </style>
