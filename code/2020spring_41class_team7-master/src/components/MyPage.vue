@@ -93,7 +93,6 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 export default {
   
   data() {
