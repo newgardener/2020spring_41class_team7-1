@@ -229,8 +229,6 @@ export default {
         this.compare_price2 = item.price
         this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
       }
-      console.log(this.compareID1)
-      console.log(this.compare_price1)
     },
     itemCategory () {
       return null
