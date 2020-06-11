@@ -127,7 +127,7 @@
         cols="12"
         >
           <router-link 
-            class="routerLink" to="/itemdetail"
+            class="routerLink" v-bind:to="'/itemdetail/'+ item.id"
           >
             <v-card flat tile color="#E8EAF6">
               <v-row>
