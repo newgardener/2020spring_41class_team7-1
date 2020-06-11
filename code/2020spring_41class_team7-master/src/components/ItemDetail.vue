@@ -56,6 +56,7 @@
     <v-card >
         <img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;"/>
         <v-card-title class="display-1">{{item.name}}<v-spacer></v-spacer>
+        <v-btn icon class="ma-2" v-on:click=writereview()><v-icon x-large color="#BBDEFB">mdi-border-color</v-icon></v-btn>
         <div><v-btn icon class="ma-2" @click="snackbar = true"><v-icon x-large color="#F48FB1">mdi-heart</v-icon></v-btn>
         <v-snackbar v-model="snackbar">
             찜한 상품은 WishList에서 확인할 수 있습니다!
@@ -76,7 +77,7 @@
                 <div>({{item.reviewNum}})</div>
               </v-row>
               <br>
-              <v-row align="center" class="display-1 mx-2 font-weight-black"> 최저가: {{item.item_id}}원 </v-row>
+              <v-row align="center" class="display-1 mx-2 font-weight-black"> 최저가: {{item.price}}원 </v-row>
             </v-card-subtitle>
           <v-card-text>
             <v-tabs-slider></v-tabs-slider>
@@ -89,7 +90,8 @@
             <v-tab-item>매일 자기전 듣고 있습니다.<br>아주 깔끔한 앨범 감사합니다<br>작성자: 박진영</v-tab-item>
             <v-tab>구매처</v-tab>
             <!--구매처 정보-->
-            <v-tab-item>www.skku.edu (65000원) <br>icampus.skku.edu (72000원)</v-tab-item>
+            <v-tab-item><v-card v-for="seller in sellers" :key="seller">{{seller.site_name}}<br>
+            가격:{{seller.cost}}<br>{{seller.site_url}}</v-card></v-tab-item>
             </v-tabs>
           </v-card-text>
       </v-card>
@@ -100,9 +102,10 @@
 
 
 <script>
+
 export default {
   created() {
-    this.id = parseInt(this.$route.params.id,10)
+    this.id = this.$route.params.id
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
@@ -119,7 +122,26 @@ export default {
                       this.item.describer = tar.describer
                     }
                 }
-            })     
+            })
+    this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+this.id+'.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+                for (let key in data) {
+                                var tar = data[key]
+                                if(tar.item_id === this.id){
+                                var cost = Number(tar.cost.replace(/[^0-9.-]+/g,""))
+                                if(cost < this.item.price) this.item.price = cost
+                                var tmp =
+                                  {
+                                    cost: cost,
+                                    item_id: tar.item_id,
+                                    site_name : tar.site_name,
+                                    site_url: tar.site_url
+                                  }
+                                this.sellers.push(tmp)
+                                }
+                            }
+                        })
   },
     data() {
     return {
@@ -132,7 +154,7 @@ export default {
         src:'',
         name:'',
         id:'',
-        price:'',
+        price:100000000,
         reviewNum:'',
         score:'',
         total_score:'',
@@ -143,6 +165,11 @@ export default {
       snackbar: false,
     }
   },
+  methods:{
+      writereview(){
+        this.$router.push({ name: 'Reviewwrite'})
+      }
+  }
 }
 </script>
 
