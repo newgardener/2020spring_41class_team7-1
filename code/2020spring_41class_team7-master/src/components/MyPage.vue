@@ -30,8 +30,9 @@
     <v-container>
       <div class = "block" id = "first">
         <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="50px" data-height="50px"></span>
+        <p class="uemail">  </p>
         (d)닉네임<!-- 토큰 uid로 user DB 검색 -->
-        (d)이름<input type="hidden" id="uname" value="getCookie()"><!-- 토큰 uid로 user DB 검색 -->
+        (d)이름<id="uname" value="asd"><!-- 토큰 uid로 user DB 검색 -->
       </div>
 
       <div class = "block" id = "second">
@@ -126,6 +127,7 @@ export default {
     //var my_info = getCookie("email")//함수 보완해서 수정 중
     console.log(email)
     alert(email)
+    $('.uemail').text(email);
     name = nick
     console.log(name)
   }
