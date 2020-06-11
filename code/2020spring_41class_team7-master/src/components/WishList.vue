@@ -1,23 +1,60 @@
 <template>
-  <v-card
-    max-width="600px"
-    class="mx-auto"
-    color=#768AFF
-  >
+  <div>
     <v-app-bar
-      dark
-      color="yellow darken-3"
+      color="amber"
+      height="100px"
     >
-      <v-btn icon width="auto" height="auto"  class="pa-1">
-        <v-avatar size="60">
-         <img src="../assets/ComparewiseLOGO.jpg">
-        </v-avatar>
-      </v-btn>
-      <v-toolbar-title>CompareWise</v-toolbar-title>
+      <router-link class="routerLink" to="/main">
+        <v-btn icon width="auto" height="auto"  class="ma-1">
+          <v-avatar size="90">
+          <img src="../assets/logo.png">
+          </v-avatar>
+        </v-btn>  
+      </router-link>
+      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
+
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon large color="white">mdi-star-outline</v-icon>
+      
+            <!-- <router-link 
+              class="routerLink" to="/wishlist"
+              v-if="this.$store.state.isLogin"
+            >
+              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
+                <v-icon x-large>mdi-star-outline</v-icon>
+              </v-btn>
+            </router-link> -->
+
+      
+      <router-link 
+        class="routerLink" to="/mypage"
+        v-if="this.$store.state.isLogin"
+      >
+        <v-btn icon class="ma-2">
+          <v-icon x-large>mdi-account-outline</v-icon>
+        </v-btn>
+      </router-link>
+      
+      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
+        Logout
       </v-btn>
+          
+      <router-link 
+        class="routerLink" to="/login"
+        v-if="!this.$store.state.isLogin"
+      >
+        <v-btn class="ma-2" outlined>
+          Login
+        </v-btn>
+      </router-link>
+
+      <router-link 
+        class="routerLink" to="/signup"
+        v-if="!this.$store.state.isLogin"
+      >
+        <v-btn class="ma-2" outlined>
+          Signup
+        </v-btn>
+      </router-link>
     </v-app-bar>
     <v-app-bar dense>
       <div style="width: 100%;">
@@ -59,43 +96,25 @@
 
     </v-container>
 
-    <v-bottom-navigation
-      v-model="bottomNav">
-      <router-link 
-        class="routerLink" to="/mypage">
-        <v-btn value="recent">
-          <span>MY</span>
-          <span class="iconify" data-icon="mdi:account" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-       </v-btn>
-      </router-link>
+    <v-footer class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
 
-      <router-link 
-        class="routerLink" to="/Wishlist">
-        <v-btn value="favorites">
-          <span>위시리스트</span>
-          <span class="iconify" data-icon="mdi:cards-heart" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-       </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/Review">
-        <v-btn value="nearby">
-         <span>Review</span>
-         <span class="iconify" data-icon="mdi:border-color" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-        </v-btn>
-      </router-link>
-    </v-bottom-navigation>
-
-  </v-card>
+  </div>
 </template>
 
 <script>
 import firebase from 'firebase';
+import 'expose-loader?$!expose-loader?jQuery!jquery'
+import { eventBus } from "../main"
 
 export default {
     data(){
       return{
-
+          email: "",
+          wishnum: 0,
+          wish: [],
       }
     },
     methods: {
@@ -145,16 +164,33 @@ export default {
       }
     },
     created() {
-    /*eventBus.$on('loginTrue', isTrue => {
+    eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
-    })*/
-    var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
-    var email = value? value[2] : null;
-    var value2 = document.cookie.match('(^|;) ?' + "nick" + '=([^;]*)(;|$)');
-    var nick = value2? value2[2] : null;
-    //var my_info = getCookie("email")//함수 보완해서 수정 중
+    })
+    var email = this.getCookie("email")
     console.log(email)
-    alert(email)
+    this.email=email;
+    this.$http.get('https://comparewise.firebaseio.com/WishList.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+                for (let key in data) {
+                  if (data[key]==null)
+                  {
+                    continue;
+                  }
+                  if(data[key].user_id==this.email)
+                  {
+                    var tar = data[key]
+                    var tmp =
+                        {
+                            item_id: tar.item_id,
+                            date: tar.wish_list_date,
+                        }
+                    this.wish.push(tmp)
+                    this.wishnum = this.wishnum + 1
+                  }
+                }
+            });
     }
 }
 </script>
@@ -162,8 +198,11 @@ export default {
 <style scoped>
   .block{
     width: 100%;
-    background-color:beige;
+    background-color:#E8EAF6;
+    margin-top:10px;
     margin-bottom:20px;
     padding:10px;
+    height: auto;
+    overflow: hidden;
   }
 </style>
