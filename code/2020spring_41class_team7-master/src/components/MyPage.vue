@@ -1,98 +1,116 @@
 <template>
-  <v-card
-    max-width="600px"
-    class="mx-auto"
-    color=#768AFF
-  >
+  <div>
     <v-app-bar
-      dark
-      color="yellow darken-3"
+      color="amber"
+      height="100px"
     >
       <router-link class="routerLink" to="/main">
-        <v-btn 
-          icon 
-          width="auto" 
-          height="auto"  
-          class="ma-1"
-        >
+        <v-btn icon width="auto" height="auto"  class="ma-1">
           <v-avatar size="90">
-          <img src="../assets/ComparewiseLOGO.jpg">
+          <img src="../assets/logo.png">
           </v-avatar>
         </v-btn>  
-    </router-link>  
-      <v-toolbar-title>CompareWise</v-toolbar-title>
+      </router-link>
+      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
+
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon large color="white">mdi-star-outline</v-icon>
+      
+            <!-- <router-link 
+              class="routerLink" to="/wishlist"
+              v-if="this.$store.state.isLogin"
+            >
+              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
+                <v-icon x-large>mdi-star-outline</v-icon>
+              </v-btn>
+            </router-link> -->
+
+      
+      <router-link 
+        class="routerLink" to="/mypage"
+        v-if="this.$store.state.isLogin"
+      >
+        <v-btn icon class="ma-2">
+          <v-icon x-large>mdi-account-outline</v-icon>
+        </v-btn>
+      </router-link>
+      
+      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
+        Logout
       </v-btn>
+          
+      <router-link 
+        class="routerLink" to="/login"
+        v-if="!this.$store.state.isLogin"
+      >
+        <v-btn class="ma-2" outlined>
+          Login
+        </v-btn>
+      </router-link>
+
+      <router-link 
+        class="routerLink" to="/signup"
+        v-if="!this.$store.state.isLogin"
+      >
+        <v-btn class="ma-2" outlined>
+          Signup
+        </v-btn>
+      </router-link>
     </v-app-bar>
 
     <v-container>
       <div class = "block" id = "first">
-        <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="50px" data-height="50px"></span>
-      <div>   이름: {{name}}</div>
-      <div>   별명: {{nick}} </div>
+        <div style = "float: left; width: 20%; text-align: center;">
+          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="100px" data-height="100px"></span>
+        </div>
+        <div style = "font-size: 40px">{{nick}} </div>
+        <div>{{name}} 님, 안녕하세요.</div>
       </div>
 
       <div class = "block" id = "second">
-        <div class = "b_in_b1">리뷰를 작성한 상품 : {{review}}</div><!-- 토큰 uid로 user DB 검색 -->
-        <div class = "b_in_b1">위시리스트에 담긴 상품 : {{wish_list}}</div><!-- 토큰 uid로 wishlist DB 검색 -->
-        <div class = "b_in_b1">0</div><!-- 토큰 uid로 review DB 검색 -->
-        <div class = "b_in_b1">내 리뷰</div>
-        <div class = "b_in_b1">관심상품</div>
-        <div class = "b_in_b1">문의내역</div>
+        <div style = "float: left; width: 33%;">
+          <div><router-link class="routerLink" to="/review">{{review}}</router-link></div><!-- 리뷰 보기 페이지 만들기 -->
+          <div>내 리뷰</div>
+        </div>
+        <div style = "width: 1px; background-color: black; height: 45px; float: left;"></div>
+        <div style = "float: left; width: 33%;">
+          <div><router-link class="routerLink" to="/wishlist">{{wish_list}}</router-link></div>
+          <div>위시리스트</div>
+        </div>
+        <div style = "width: 1px; background-color: black; height: 45px; float: left;"></div>
+        <div style = "float: left; width: 33%;">
+          <div>0</div><!-- 이건 고민좀 -->
+          <div>문의내역</div>
+        </div>
       </div>
 
       <div class = "block" id = "third">
-        <div class = "b_in_b2">관심 분야</div>
-        <div class = "b_in_b2">
-          <div class="my-2">
-            <v-btn class="ma-2" outlined color="indigo">분야 선택</v-btn>
-          </div>
+        <div>관심 분야</div>
+        <div style = "float: left; width: 49%; text-align: center;">
+          <v-btn class="ma-2" outlined color="indigo">분야 선택</v-btn>
         </div>
-        <div class = "b_in_b2">
+        <div style = "width: 1px; background-color: black; height: 45px; float: left;"></div>
+        <div style = "float: left; width: 49%; display: flex; justify-content: center;">
           <v-switch v-model="switch1"
           :label="'푸시알림 받기'"></v-switch>
         </div>
       </div>
 
-      <div class = "block" id = "third">
-        <v-btn small color="primary">문의하기</v-btn>
+      <div class = "block" id = "third" style = "text-align: center;">
+        <v-btn big color="primary">문의하기</v-btn>
       </div>
     </v-container>
 
-    <v-bottom-navigation
-      v-model="bottomNav">
-      <router-link 
-        class="routerLink" to="/mypage">
-        <v-btn value="recent">
-          <span>MY</span>
-          <span class="iconify" data-icon="mdi:account" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-       </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/Wishlist">
-        <v-btn value="favorites">
-          <span>위시리스트</span>
-          <span class="iconify" data-icon="mdi:cards-heart" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-       </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/Review">
-        <v-btn value="nearby">
-         <span>Review</span>
-         <span class="iconify" data-icon="mdi:border-color" data-inline="false" style="margin-top: 5px;" data-width="30px" data-height="30px"></span>
-        </v-btn>
-      </router-link>
-    </v-bottom-navigation>
-
-  </v-card>
+    <v-footer class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
+  </div>
 </template>
 
 <script>
 import firebase from 'firebase';
+import 'expose-loader?$!expose-loader?jQuery!jquery'
+import { eventBus } from "../main"
 export default {
   
   data() {
@@ -108,7 +126,6 @@ export default {
           name: "",
           wish_list: 0,
           review: 0,
-
         }
          
   },
@@ -126,9 +143,9 @@ export default {
       document.head.appendChild(recaptchaScript)
     },
   created() {
-    /*eventBus.$on('loginTrue', isTrue => {
+    eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
-    })*/
+    })
     var email = this.getCookie("email")//함수 보완해서 수정 중
     var nick = this.getCookie("nick")//함수 보완해서 수정 중
     var name = this.getCookie("name")//함수 보완해서 수정 중
@@ -139,11 +156,9 @@ export default {
     this.password=password; 
     this.nick=nick; 
     console.log(name)
-
     this.$http.get('https://comparewise.firebaseio.com/WishList.json').then(function(data){
                 return data.json();
             }).then(function(data){
-              var cnt=0;
                 for (let key in data) {
                   if (data[key]==null)
                   {
@@ -158,7 +173,6 @@ export default {
             this.$http.get('https://comparewise.firebaseio.com/Review.json').then(function(data){
                 return data.json();
             }).then(function(data){
-              var cnt=0;
                 for (let key in data) {
                   if (data[key]==null)
                   {
@@ -184,8 +198,14 @@ export default {
 <style scoped>
   .block{
     width: 100%;
-    background-color:beige;
+    background-color:#E8EAF6;
+    margin-top:10px;
     margin-bottom:20px;
     padding:10px;
+    height: auto;
+    overflow: hidden;
+  }
+  .block#second{
+    text-align: center;
   }
 </style>
