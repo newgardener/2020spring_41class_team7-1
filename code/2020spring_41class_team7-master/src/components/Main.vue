@@ -232,6 +232,11 @@ export default {
     itemCategory () {
       return null
     },
+    getCookie(name)
+      {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+      },
     doSearch () {
       console.log(this.search)
       this.list = []
@@ -339,6 +344,12 @@ export default {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
+    if(this.getCookie("email"))
+    {
+      eventBus.$emit("loginTrue", this.isTrue);
+    alert('Successfully logged in');
+    this.$router.replace(this.$route.query.redirect || '/main');
+    }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
