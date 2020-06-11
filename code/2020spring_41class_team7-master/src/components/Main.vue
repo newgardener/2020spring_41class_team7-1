@@ -7,12 +7,11 @@
       <router-link class="routerLink" to="/main">
         <v-btn icon width="auto" height="auto"  class="ma-1">
           <v-avatar size="90">
-          <img src="../assets/ComparewiseLOGO.jpg">
+          <img src="../assets/logo.png">
           </v-avatar>
         </v-btn>  
       </router-link>
-
-      <v-toolbar-title><h1>CompareWise</h1></v-toolbar-title>
+      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
 
       <v-spacer></v-spacer>
       
@@ -60,62 +59,65 @@
 
     <!-- 검색창 -->
     <v-card
+      tile
       color="amber lighten-3"
       width="100%"
       height="80px"
     >
-      <v-form>
-        <v-row class="mx-2">
-          <v-text-field
-            
-            outlined
-            clearable
-            class="my-3"
-            color="black"
-            label="Search!"
-            append-icon = mdi-magnify
-            @click:append="doSomething"
-          >
-          </v-text-field>
-        </v-row>
-      </v-form>
+    <v-row class="mx-3">
+      <v-text-field
+        full-width
+        outlined
+        clearable
+        v-model="search"
+        label="Search!"
+        class="my-3"
+        color="black"
+        append-icon = mdi-magnify
+        @click:append="doSearch"
+      >
+      </v-text-field>
+    </v-row>
     </v-card>
 
     <!-- 카테고리 및 랭킹 -->
     <v-container class="mt-5" width="100%">
       <v-row  width="100%" no-gutters>
-          <v-btn @click="changeList(1)" color="#E8EAF6" tile width="25%">
-            <span>category1</span>
+          <v-btn @click="changeList(1)" color="#E8EAF6" tile width="20%">
+            <span>생활용품</span>
           </v-btn>
 
-          <v-btn @click="changeList(2)" color="#E8EAF6" tile width="25%">
-            <span>Category2</span>
+          <v-btn @click="changeList(2)" color="#E8EAF6" tile width="20%">
+            <span>패션</span>
           </v-btn>
 
-          <v-btn @click="changeList(3)" color="#E8EAF6" tile width="25%">
-            <span>Category3</span>
+          <v-btn @click="changeList(3)" color="#E8EAF6" tile width="20%">
+            <span>뷰티</span>
           </v-btn>
 
-          <v-btn id="defaultList" @click="changeList(4)" color="#E8EAF6" tile width="25%">
-            <span>Category4</span>
+          <v-btn @click="changeList(4)" color="#E8EAF6" tile width="20%">
+            <span>식품</span>
+          </v-btn>
+
+          <v-btn @click="changeList(5)" color="#E8EAF6" tile width="20%">
+            <span>가전제품</span>
           </v-btn>
       </v-row>
       <v-row  width="100%" no-gutters>
-          <v-btn @click="changeList(5)" color="#E8EAF6" tile width="33.33%">
+          <v-btn @click="changeList(6)" color="#E8EAF6" tile width="33.33%">
             <span>Daily</span>
           </v-btn>
 
-          <v-btn @click="changeList(6)" color="#E8EAF6" tile width="33.33%">
+          <v-btn @click="changeList(7)" color="#E8EAF6" tile width="33.33%">
             <span>Weekly</span>
           </v-btn>
 
-          <v-btn @click="changeList(7)" color="#E8EAF6" tile width="33.34%">
+          <v-btn @click="changeList(8)" color="#E8EAF6" tile width="33.34%">
             <span>Monthly</span>
           </v-btn>
       </v-row>
     </v-container>
     
-
     <!-- 아이템 리스트 -->
     <v-container>
       <v-row>
@@ -183,12 +185,12 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
                 <router-link class="routerLink" to="/Compare">
-                    <v-btn icon dark v-on="on" class="ma-2">
+                    <v-btn icon v-on="on" class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
                 </router-link>
               </template>
-              <span>Wish List</span>
+              <span>Compare</span>
           </v-tooltip>
 
           <v-tooltip bottom>
@@ -230,8 +232,13 @@ export default {
     itemCategory () {
       return null
     },
-    search () {
-      return null
+    doSearch () {
+      console.log(this.search)
+      this.list = []
+      for(var i=0; i<this.items.length; i++){
+        if(this.items[i].name.includes(this.search))
+          this.list.push(this.items[i])
+      }
     },
     doSomething () {
       return null
@@ -247,34 +254,52 @@ export default {
       this.dialog = false
       console.log(this.dialog)
     },
+    getPrice() {
+      for(var i=0; i<this.items.length; i++){
+        var min_cost = 100000000
+        for(var j=0; j<this.sellers.length; j++){  
+          if(this.sellers[j].item_id==this.items[i].id){
+            if(this.sellers[j].cost < min_cost)
+              min_cost = this.sellers[j].cost
+          } 
+        }
+        this.items[i].price = min_cost
+      }
+    },
     changeList (num) {
       this.list = []
       this.listNum = num
       if(this.listNum==1){
-        this.list.push(this.items[0])
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].category_id==1)
+            this.list.push(this.items[i])
+        }  
       }
       else if(this.listNum==2){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].category_id==2)
+            this.list.push(this.items[i])
+        }  
       }
       else if(this.listNum==3){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].category_id==3)
+            this.list.push(this.items[i])
+        }  
       }
       else if(this.listNum==4){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].category_id==4)
+            this.list.push(this.items[i])
+        }  
       }
       else if(this.listNum==5){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].category_id==5)
+            this.list.push(this.items[i])
+        }  
       }
+      //do not need category_id
       else if(this.listNum==6){
         this.list.push(this.items[1])
         this.list.push(this.items[1])
@@ -292,30 +317,19 @@ export default {
         this.list.push(this.items[1])
         this.list.push(this.items[1])
       }
+      else if(this.listNum==8){
+        for(var i=0; i<this.items.length; i++) {
+          this.list.push(this.items[i]);
+        }   
+      }
     }
   },
   data() {
     return {
-      
-      items: [/*
-        {
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          name: 'Category1',
-          id: '1',
-          price: '65,000',
-          reviewNum: '365',
-          score: 4.3
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          name: 'Halcyon Days',
-          id: '1',
-          price: '5,000',
-          reviewNum: '265',
-          score: 4.7
-        },*/
-      ],
-      listNum: 5,
+      search:"",
+      sellers:[],
+      items: [],
+      listNum: 8,
       list: [],
       //to open dialog
       dialog: false,
@@ -328,71 +342,59 @@ export default {
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
-
-                /*for(var i = 0; i< 10 ; i++)
-                {
-                  this.$http.post('https://comparewise.firebaseio.com/item.json',
-                   {
-                     avg_score: 4.1,
-                     category_id: 2,
-                     item_id: i,
-                     item_name: "아이템이름"+i,
-                     sales_volume: 5432,
-                     src: 'http://pocarisweat.co.kr/wp-content/uploads/2018/03/2018-%ED%8F%AC%EC%B9%B4%EB%A6%AC%EC%8A%A4%EC%9B%A8%ED%8A%B8-%EB%AA%A8%EB%8D%B8-%ED%8A%B8%EC%99%80%EC%9D%B4%EC%8A%A4-1024x768.jpg'
-                   }
-                   )
-                }*/
                 for (let key in data) {
                     var tar = data[key]
-                  
                     var tmp =
                       {
-                        src: tar.src,
+                        category_id: tar.category_id,
+                        src: tar.img_src,
                         name: tar.item_name,
                         id: tar.item_id,
-                        price: '5,000',
-                        reviewNum: '265',
-                        score: tar.avg_score
+                        price: 0,
+                        reviewNum: tar.review_volume,
+                        score: tar.avg_score,
+                        total_score: tar.total_score
                       }
-                      this.list.push(tmp)
-                    }
+                      this.items.push(tmp)
+                }
+                //sort by total_score
+                for(var i=0; i<this.items.length; i++) {
+                  //addr에 i 들어가야 함!
+                  var addr = 2328109
+                  this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+addr.toString()+'.json').then(function(data){
+                      return data.json();
+                  }).then(function(data){
+                            for (let key in data) {
+                                var tar = data[key]
+                                var cost = Number(tar.cost.replace(/[^0-9.-]+/g,""))
+                                var tmp =
+                                  {
+                                    cost: cost,
+                                    item_id: tar.item_id,
+                                  }
+                                this.sellers.push(tmp)
+                            }
+                        })
+                }
+                for(var i=0; i<this.items.length; i++) {
+                  this.items.sort(function(a, b) {
+                    return a.total_score < b.total_score ? 1 : a.total_score > b.total_score ? -1 : 0; 
+                  });
+                }
             })
-    //make default item list
-  
+    //default list        
+    this.changeList(8)
   },
-  
-}
-import Vue from 'vue'
-import { longClickDirective } from 'vue-long-click'
-const longClickInstance = longClickDirective({delay: 600, interval: 500000})
-Vue.directive('longclick', longClickInstance)
-const PRESS_TIMEOUT = 1000
-Vue.directive('longpress', {
-  bind: function (el, { value }, vNode) {
-    if (typeof value !== 'function') {
-      console.warn(`Expect a function, got ${value}`)
-      return
-    }
-    let pressTimer = null
-    const start = e => {
-      if (e.type === 'click' && e.button !== 0) {
-        return;
-      }
-      if (pressTimer === null) {
-        pressTimer = setTimeout(() => value(e), PRESS_TIMEOUT)
-      }
-    }
-    const cancel = () => {
-      if (pressTimer !== null) {
-        clearTimeout(pressTimer)
-        pressTimer = null
-      }
-    }
-    ;['mousedown', 'touchstart'].forEach(e => el.addEventListener(e, start))
-    ;['click', 'mouseout', 'touchend', 'touchcancel'].forEach(e => el.addEventListener(e, cancel))
+  beforeUpdate(){
+    this.getPrice()
   }
-})
-
+}
+/*문제
+1: default list 표현
+2: db 변경 필요
+3: daily weekly monthly
+4: total score 수치 변경 필요
+*/
 </script>
 
 
