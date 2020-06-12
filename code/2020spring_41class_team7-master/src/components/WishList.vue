@@ -1,73 +1,9 @@
 <template>
-  <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-      <router-link class="routerLink" to="/main">
-        <v-btn icon width="auto" height="auto"  class="ma-1">
-          <v-avatar size="90">
-          <img src="../assets/logo.png">
-          </v-avatar>
-        </v-btn>  
-      </router-link>
-      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
-
-      <v-spacer></v-spacer>
-      
-            <!-- <router-link 
-              class="routerLink" to="/wishlist"
-              v-if="this.$store.state.isLogin"
-            >
-              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
-                <v-icon x-large>mdi-star-outline</v-icon>
-              </v-btn>
-            </router-link> -->
-
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/signup"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Signup
-        </v-btn>
-      </router-link>
-    </v-app-bar>
-    <v-app-bar dense>
-      <div style="width: 100%;">
-        <select name="category" style="width: 100%" @change="changecate($event)">
-            <option value="overall" selected>전체</option>
-            <option value="one">가전제품</option>
-            <option value="two">뷰티</option>
-            <option value="three">생활용품</option>
-            <option value="four">식품</option>
-            <option value="five">패션</option>
-        </select>
-      </div>
-    </v-app-bar>
+  <v-card
+    max-width="600px"
+    class="mx-auto"
+    color=#768AFF
+  >
 
     <v-container>
       
@@ -96,21 +32,16 @@
 
     </v-container>
 
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-
-  </div>
+  </v-card>
 </template>
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
+// import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 
 export default {
-    data(){
+      data(){
       return{
           email: "",
           wishnum: 0,
@@ -192,7 +123,7 @@ export default {
                 }
             });
     }
-}
+  }
 </script>
 
 <style scoped>

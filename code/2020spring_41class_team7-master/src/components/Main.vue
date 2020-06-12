@@ -1,6 +1,5 @@
 <template>
     <div>
-
     <!-- search bar -->
     <template>
       <v-toolbar
@@ -26,36 +25,12 @@
                        @click="changeList(tab)">
                        {{ tab }}
                 </v-tab>
-
-                <!-- <div class="text-center">
-                  <v-menu open-on-hover down offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn color="secondary"
-                             v-bind="attrs"
-                             v-on="on"
-                             style="padding: 15px 15px; width: 100px">
-                        랭킹 기간 설정
-                      </v-btn>
-                    </template>
-
-                    <v-list>
-                      <v-list-item
-                        v-for="time in sortByTime"
-                        :key="time"
-                        @click="changeList(time)">
-                        <v-list-item-title>{{ time }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </div> -->
-
               </v-tabs>
             </template>   
       </v-toolbar>
     </template>
 
-    <!-- 아이템 리스트 -->
-    <v-container>
+<v-container>
       <v-row>
         <v-col
         v-for="(item, i) in list"
@@ -63,7 +38,7 @@
         cols="12"
         >
           <router-link 
-            class="routerLink" to="/itemdetail"
+            class="routerLink" v-bind:to="'/itemDetail/'+item.id" 
           >
             <v-card flat tile color="#E8EAF6">
               <v-row>
@@ -73,14 +48,13 @@
                   :cols="n === 1 ? 3 : 9"
                 >
                   <div v-if="n === 1">
-                    <h2 class="ml-3">{{ i+1 }}</h2>
                     <center>
                       <v-avatar
                         class="mb-5 ml-7"
                         size="90%"
                         tile
                       >
-                        <img src="../assets/ComparewiseLOGO.jpg">
+                        <img :src=item.src>
                       </v-avatar>
                     </center>
                     
@@ -90,22 +64,22 @@
                       class="display-1 font-weight-bold"
                       v-text="item.name"
                     ></v-card-title>
+                    <v-divider class="mx-4"></v-divider>
                     <v-card-subtitle 
-                      class="title ml-1 mt-0"
-                    > {{ item.price }} 원</v-card-subtitle>
+                      class="title ml-2 mt-1"
+                    > 최저가 {{ item.price }} 원</v-card-subtitle>
                     
                     
-                    <v-row class="ml-2">
-                      <div v-for="n in 5"
-                            :key="n"
-                            >
-                        <v-icon v-if="item.score - n >= 0" color="amber" class="ml-1">
-                          mdi-star
-                        </v-icon>
-                        <v-icon v-if="item.score - n < 0 && item.score - n >= -0.5" color="amber" class="ml-1">
-                          mdi-star-half-full
-                        </v-icon>
-                      </div>
+                    <v-row class="ml-2" style="padding: 10px;">
+                      <v-rating
+                            v-model="item.score"
+                            color="pink"
+                            dense
+                            half-increments
+                            readonly
+                            size="25"
+                            class="mx-3"
+                            ></v-rating>
                       <p class="ml-2">
                         ({{ item.reviewNum }})
                       </p>
@@ -117,16 +91,14 @@
             </v-card>
           </router-link>
             
-          <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse">
+          <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: 0 0;">
             <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <router-link class="routerLink" to="/Compare">
-                    <v-btn icon dark v-on="on" class="ma-2">
+              <template v-slot:activator="{}">
+                    <v-btn icon v-on:click=Iscompare(item)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-                  </router-link>
               </template>
-              <span>Comprae Page</span>
+              <span>Compare</span>
           </v-tooltip>
 
           <v-tooltip bottom>
@@ -135,7 +107,7 @@
                 <v-btn icon color="amber" dark v-on="on" class="ma-2">
                   <v-icon x-large>mdi-star-circle</v-icon>
                 </v-btn>
-              </router-link>
+            </router-link>
             </template>
             <span>Wish List</span>
           </v-tooltip>
@@ -146,10 +118,10 @@
     </v-container>
 
 <!-- Footer -->
-    <!-- <v-footer class="pa-3">
+    <v-footer class="pa-3" fixed>
       <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer> -->
+      <div>&copy; {{ new Date().getFullYear() }} team7</div>
+    </v-footer>
   </div>
 
 
@@ -161,6 +133,17 @@ import { eventBus } from "../main"
 
 export default {
   methods: {
+    Iscompare(item){
+      if(this.compareID1 == 'defult'){
+          this.compareID1 = item.id
+          this.compare_price1 = item.price
+      }
+      else{
+        this.compareID2 = item.id
+        this.compare_price2 = item.price
+        this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
+      }
+    },
     itemCategory () {
       return null
     },
@@ -168,18 +151,21 @@ export default {
       console.log(this.search)
       this.list = []
       for(var i=0; i<this.items.length; i++){
-        if(this.items[i].name.includes(this.search))
+        if(this.items[i].name.includes(this.search)){
           this.list.push(this.items[i])
+          this.currentItem = this.items[i].category_id
+        }
+        else if(this.items[i].keyword.includes(this.search)){
+          this.list.push(this.items[i])
+          this.currentItem = this.items[i].category_id
+        }
+
       }
     },
     doSomething () {
       return null
     },
     logout () {
-      this.deleteCookie("name")
-      this.deleteCookie("pw")
-      this.deleteCookie("nick")
-      this.deleteCookie("email")
       this.$store.commit('loginFalse')
     },
     dialogTrue () {
@@ -202,19 +188,6 @@ export default {
         this.items[i].price = min_cost
       }
     },
-    setCookie(name, value, day) {
-        var date = new Date();
-        date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
-        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-         },
-        getCookie(name) {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value? value[2] : null;
-         },
-        deleteCookie(name) {
-        var date = new Date();
-        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
-         },
     changeList (name) {
       this.list = []
       this.categoryName = name
@@ -248,35 +221,38 @@ export default {
             this.list.push(this.items[i])
         }  
       }
+      else if(this.categoryName=='종합랭킹'){
+        for(var i=0; i<this.items.length; i++) {
+            this.list.push(this.items[i])
+        }  
+      }
     }
   },
   data() {
     return {
+      temp:'',
+      compareID1:'defult',
+      compareID2:'defult',
+      compare_price1:'defult',
+      compare_price2:'defult',
       search:"",
-      currentItem: 'tab-Web',
-      tabs: ['생활용품', '패션', '뷰티', '식품', '가전제품'],
-      sortByTime: ['Daily', 'Weekly', 'Monthly'],
+      currentItem: 0,
+      tabs: ['종합랭킹', '생활용품', '패션', '뷰티', '식품', '가전제품'],
       sellers:[],
       items: [],
       listNum: 8,
-      categoryName: '',
       list: [],
       //to open dialog
       dialog: false,
       drawer: false,
-      tab: null
+      tab: null,
+      drawer: false
     }
   },
   created() {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
-    if(this.getCookie("email"))
-    {
-      eventBus.$emit("loginTrue", this.isTrue);
-      alert('Successfully logged in');
-      
-    }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
@@ -287,6 +263,7 @@ export default {
                         category_id: tar.category_id,
                         src: tar.img_src,
                         name: tar.item_name,
+                        keyword: tar.keyword,
                         id: tar.item_id,
                         price: 0,
                         reviewNum: tar.review_volume,
@@ -298,7 +275,7 @@ export default {
                 //sort by total_score
                 for(var i=0; i<this.items.length; i++) {
                   //addr에 i 들어가야 함!
-                  var addr = 2328109
+                  var addr = this.items[i].id
                   this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+addr.toString()+'.json').then(function(data){
                       return data.json();
                   }).then(function(data){
@@ -312,6 +289,7 @@ export default {
                                   }
                                 this.sellers.push(tmp)
                             }
+                            this.getPrice()
                         })
                 }
                 for(var i=0; i<this.items.length; i++) {
@@ -319,9 +297,13 @@ export default {
                     return a.total_score < b.total_score ? 1 : a.total_score > b.total_score ? -1 : 0; 
                   });
                 }
+                
+                for(var i=0; i<this.items.length; i++) {
+                  this.list.push(this.items[i])
+                }
             })
     //default list        
-    this.changeList(8)
+    
   },
   beforeUpdate(){
     this.getPrice()
@@ -330,7 +312,6 @@ export default {
 }
 
 </script>
-
 
 
 

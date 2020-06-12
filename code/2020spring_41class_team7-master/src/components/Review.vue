@@ -1,63 +1,5 @@
 <template>
-  <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-      <router-link class="routerLink" to="/main">
-        <v-btn icon width="auto" height="auto"  class="ma-1">
-          <v-avatar size="90">
-          <img src="../assets/logo.png">
-          </v-avatar>
-        </v-btn>  
-      </router-link>
-      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
-
-      <v-spacer></v-spacer>
-      
-            <!-- <router-link 
-              class="routerLink" to="/wishlist"
-              v-if="this.$store.state.isLogin"
-            >
-              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
-                <v-icon x-large>mdi-star-outline</v-icon>
-              </v-btn>
-            </router-link> -->
-
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/signup"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Signup
-        </v-btn>
-      </router-link>
-    </v-app-bar>
-
-    <v-container>
+  <v-container>
       <div class = "block" id = "first">
         
         <v-row class="ml-2">
@@ -128,18 +70,13 @@
         </v-col>
       </div>
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-  </div>
 </template>
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
+// import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
+
 export default {
   
   data() {
@@ -165,12 +102,12 @@ export default {
           return value? value[2] : null;
         }
   },
-  mounted() {
+    mounted() {
       let recaptchaScript = document.createElement('script')
       recaptchaScript.setAttribute('src', 'https://code.iconify.design/1/1.0.6/iconify.min.js')
       document.head.appendChild(recaptchaScript)
     },
-  created() {
+    created() {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
@@ -218,20 +155,12 @@ export default {
                                 }
                             }
                         }})
-                  });
-                
+                  });       
   }
- /*admin.auth().verifyIdToken(idToken)
-  .then(function(decodedToken) {
-    let uid = decodedToken.uid;
-    // ...
-  }).catch(function(error) {
-    // Handle error
-  });*/
 }
 </script>
 
-<style scoped>
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

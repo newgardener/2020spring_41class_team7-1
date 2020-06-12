@@ -1,18 +1,6 @@
  <template>
-    <div class="login">
-        <router-link to="/main">
-            <v-btn 
-            icon 
-            width="auto" 
-            height="auto"  
-            class="ma-1"
-            >
-            <v-avatar size="90">
-            <img src="../assets/ComparewiseLOGO.jpg">
-            </v-avatar>
-            </v-btn>  
-        </router-link> 
-            <v-layout class="justify-center">
+    <div>
+            <v-layout class="justify-center" style="padding: 50px auto">
                 <v-card>
                     <v-img src="../assets/loginLogo.png" width="500px"></v-img>
                     <v-card-title primary-title>
@@ -39,14 +27,14 @@
 import firebase from 'firebase'
 import { eventBus } from "../main"
 
+
 export default {
     name: 'login',
     data() {
         return {
             userInfo: {
                 email: '',
-                password: '',
-                nickname: ''
+                password: ''
             },
             isTrue: false,
             idTrue: false,
@@ -54,7 +42,8 @@ export default {
         }
     },
     methods: {
-       setCookie(name, value, day) {
+
+        setCookie(name, value, day) {
         var date = new Date();
         date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
         document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
@@ -67,7 +56,6 @@ export default {
         var date = new Date();
         document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
          },
-
 
         login() {
             this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
@@ -120,5 +108,8 @@ export default {
     }
     form, input{
         width: 500px;
+    }
+    div.v-card.v-sheet.theme--light {
+        margin-top: 50px;
     }
 </style>
