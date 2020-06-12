@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+  <div>
+    <v-container>
       <div class = "block" id = "first">
         
         <v-row class="ml-2">
@@ -70,13 +71,18 @@
         </v-col>
       </div>
     </v-container>
+
+    <v-footer class="pa-3">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
+  </div>
 </template>
 
 <script>
 import firebase from 'firebase';
-// import 'expose-loader?$!expose-loader?jQuery!jquery'
+import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
-
 export default {
   
   data() {
@@ -100,14 +106,21 @@ export default {
         {
           var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
           return value? value[2] : null;
-        }
+        },
+        logout () {
+          this.deleteCookie("name")
+          this.deleteCookie("pw")
+          this.deleteCookie("nick")
+          this.deleteCookie("email")
+          this.$store.commit('loginFalse')
+        },
   },
-    mounted() {
+  mounted() {
       let recaptchaScript = document.createElement('script')
       recaptchaScript.setAttribute('src', 'https://code.iconify.design/1/1.0.6/iconify.min.js')
       document.head.appendChild(recaptchaScript)
     },
-    created() {
+  created() {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
@@ -155,12 +168,20 @@ export default {
                                 }
                             }
                         }})
-                  });       
+                  });
+                
   }
+ /*admin.auth().verifyIdToken(idToken)
+  .then(function(decodedToken) {
+    let uid = decodedToken.uid;
+    // ...
+  }).catch(function(error) {
+    // Handle error
+  });*/
 }
 </script>
 
-<style>
+<style scoped>
   .block{
     width: 100%;
     background-color:#E8EAF6;
