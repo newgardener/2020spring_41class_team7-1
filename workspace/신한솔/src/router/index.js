@@ -24,12 +24,13 @@ const requireAuth = (to, from, next) => {
 const routes = [{
         path: '/main',
         name: 'Main',
-        component: Main
+        component: Main,
     },
     {
         path: '/itemdetail/:id',
         name: 'ItemDetail',
-        component: ItemDetail
+        component: ItemDetail,
+        props: true
     },
     {
         path: '/login',
@@ -49,12 +50,13 @@ const routes = [{
     {
         path: '/wishlist',
         name: 'WishList',
-        component: WishList
+        component: WishList,
     },
     {
         path: '/compare',
         name: 'Compare',
-        component: Compare
+        component: Compare,
+        props: true
     },
     {
         path: '/review',
@@ -64,7 +66,8 @@ const routes = [{
     {
         path: '/reviewwrite',
         name: 'Reviewwrite',
-        component: Reviewwrite
+        component: Reviewwrite,
+        props: true
     },
     {
         path: '/about',

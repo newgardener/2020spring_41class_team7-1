@@ -104,16 +104,8 @@
           </v-btn>
       </v-row>
       <v-row  width="100%" no-gutters>
-          <v-btn @click="changeList(6)" color="#E8EAF6" tile width="33.33%">
-            <span>Daily</span>
-          </v-btn>
-
-          <v-btn @click="changeList(7)" color="#E8EAF6" tile width="33.33%">
-            <span>Weekly</span>
-          </v-btn>
-
-          <v-btn @click="changeList(8)" color="#E8EAF6" tile width="33.34%">
-            <span>Monthly</span>
+          <v-btn @click="changeList(6)" color="#E8EAF6" tile>
+            <span>종합랭킹</span>
           </v-btn>
       </v-row>
     </v-container>
@@ -156,7 +148,7 @@
                     ></v-card-title>
                     <v-card-subtitle 
                       class="title ml-1 mt-0"
-                    > {{ item.price }} 원</v-card-subtitle>
+                    > 최저가 {{ item.price }} 원</v-card-subtitle>
                     
                     
                     <v-row class="ml-2">
@@ -183,12 +175,10 @@
             
           <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse">
             <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <router-link class="routerLink" to="/Compare">
-                    <v-btn icon v-on="on" class="ma-2">
+              <template v-slot:activator="{}">
+                    <v-btn icon v-on:click=Iscompare(item)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-                </router-link>
               </template>
               <span>Compare</span>
           </v-tooltip>
@@ -228,23 +218,27 @@
 import { eventBus } from "../main"
 export default {
   methods: {
+    Iscompare(item){
+      if(this.compareID1 == 'defult'){
+          this.compareID1 = item.id
+          this.compare_price1 = item.price
+      }
+      else{
+        this.compareID2 = item.id
+        this.compare_price2 = item.price
+        this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
+      }
+    },
     itemCategory () {
       return null
     },
-    getCookie(name)
-      {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value? value[2] : null;
-      },
-      deleteCookie(name) {
-        var date = new Date();
-        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
-         },
     doSearch () {
       console.log(this.search)
       this.list = []
       for(var i=0; i<this.items.length; i++){
         if(this.items[i].name.includes(this.search))
+          this.list.push(this.items[i])
+        else if(this.items[i].keyword.includes(this.search))
           this.list.push(this.items[i])
       }
     },
@@ -252,10 +246,6 @@ export default {
       return null
     },
     logout () {
-      this.deleteCookie("name")
-      this.deleteCookie("pw")
-      this.deleteCookie("nick")
-      this.deleteCookie("email")
       this.$store.commit('loginFalse')
     },
     dialogTrue () {
@@ -311,25 +301,7 @@ export default {
             this.list.push(this.items[i])
         }  
       }
-      //do not need category_id
       else if(this.listNum==6){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-      }
-      else if(this.listNum==7){
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-        this.list.push(this.items[1])
-      }
-      else if(this.listNum==8){
         for(var i=0; i<this.items.length; i++) {
           this.list.push(this.items[i]);
         }   
@@ -338,6 +310,11 @@ export default {
   },
   data() {
     return {
+      temp:'',
+      compareID1:'defult',
+      compareID2:'defult',
+      compare_price1:'defult',
+      compare_price2:'defult',
       search:"",
       sellers:[],
       items: [],
@@ -351,12 +328,6 @@ export default {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
-    if(this.getCookie("email"))
-    {
-      eventBus.$emit("loginTrue", this.isTrue);
-    alert('Successfully logged in');
-    this.$router.replace(this.$route.query.redirect || '/main');
-    }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
@@ -367,6 +338,7 @@ export default {
                         category_id: tar.category_id,
                         src: tar.img_src,
                         name: tar.item_name,
+                        keyword: tar.keyword,
                         id: tar.item_id,
                         price: 0,
                         reviewNum: tar.review_volume,
@@ -378,7 +350,7 @@ export default {
                 //sort by total_score
                 for(var i=0; i<this.items.length; i++) {
                   //addr에 i 들어가야 함!
-                  var addr = 2328109
+                  var addr = this.items[i].id
                   this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+addr.toString()+'.json').then(function(data){
                       return data.json();
                   }).then(function(data){
@@ -392,6 +364,7 @@ export default {
                                   }
                                 this.sellers.push(tmp)
                             }
+                            this.getPrice()
                         })
                 }
                 for(var i=0; i<this.items.length; i++) {
@@ -399,9 +372,13 @@ export default {
                     return a.total_score < b.total_score ? 1 : a.total_score > b.total_score ? -1 : 0; 
                   });
                 }
+                
+                for(var i=0; i<this.items.length; i++) {
+                  this.list.push(this.items[i])
+                }
             })
     //default list        
-    this.changeList(8)
+    
   },
   beforeUpdate(){
     this.getPrice()
@@ -412,6 +389,7 @@ export default {
 2: db 변경 필요
 3: daily weekly monthly
 4: total score 수치 변경 필요
+5: compare page 넘어가는 방법
 */
 </script>
 

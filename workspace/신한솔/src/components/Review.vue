@@ -163,7 +163,14 @@ export default {
         {
           var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
           return value? value[2] : null;
-        }
+        },
+        logout () {
+          this.deleteCookie("name")
+          this.deleteCookie("pw")
+          this.deleteCookie("nick")
+          this.deleteCookie("email")
+          this.$store.commit('loginFalse')
+        },
   },
   mounted() {
       let recaptchaScript = document.createElement('script')
