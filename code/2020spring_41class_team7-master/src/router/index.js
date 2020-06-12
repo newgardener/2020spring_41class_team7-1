@@ -54,7 +54,8 @@ const routes = [{
     {
         path: '/compare',
         name: 'Compare',
-        component: Compare
+        component: Compare,
+        props: true
     },
     {
         path: '/review',
@@ -64,7 +65,8 @@ const routes = [{
     {
         path: '/reviewwrite',
         name: 'Reviewwrite',
-        component: Reviewwrite
+        component: Reviewwrite,
+        props: true
     },
     {
         path: '/about',
