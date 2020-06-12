@@ -1,18 +1,6 @@
  <template>
-    <div class="login">
-        <router-link to="/main">
-            <v-btn 
-            icon 
-            width="auto" 
-            height="auto"  
-            class="ma-1"
-            >
-            <v-avatar size="90">
-            <img src="../assets/ComparewiseLOGO.jpg">
-            </v-avatar>
-            </v-btn>  
-        </router-link> 
-            <v-layout class="justify-center">
+    <div>
+            <v-layout class="justify-center" style="padding: 50px auto">
                 <v-card>
                     <v-img src="../assets/loginLogo.png" width="500px"></v-img>
                     <v-card-title primary-title>
@@ -54,6 +42,21 @@ export default {
         }
     },
     methods: {
+
+        setCookie(name, value, day) {
+        var date = new Date();
+        date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
+        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+         },
+        getCookie(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+         },
+        deleteCookie(name) {
+        var date = new Date();
+        document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+         },
+
         login() {
             this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
                 return data.json();
@@ -64,8 +67,13 @@ export default {
                         this.idTrue = true;
                         this.pwdTrue = true;
                         eventBus.$emit("loginTrue", this.isTrue);
+                        this.setCookie("email", data[key].email,1);
+                        this.setCookie("nick", data[key].nickname,1);
+                        this.setCookie("pw", data[key].password,1);
+                        this.setCookie("name", data[key].name,1);
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');
+                        break;
                     } 
                     if (data[key].email == this.userInfo.email && data[key].password != this.userInfo.password){
                         this.idTrue = true;
@@ -100,5 +108,8 @@ export default {
     }
     form, input{
         width: 500px;
+    }
+    div.v-card.v-sheet.theme--light {
+        margin-top: 50px;
     }
 </style>
