@@ -7,17 +7,24 @@
 </template>
 
 <script>
+
+
+
+
+
 export default {
-  name: "App",
+  name: 'App',
+
   components: {
-    
+
   },
-  methods: {
-    
-  },
+
   data: () => ({
 
-  })
-}
-
+  }),
+};
 </script>
+
+<style>
+
+</style>

@@ -53,7 +53,7 @@
         </v-btn>
       </router-link>
     </v-app-bar>
-    <v-card >
+    <v-card outlined>
         <img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;"/>
         <v-card-title class="display-1">{{item.name}}<v-spacer></v-spacer>
         <v-btn icon class="ma-2" v-on:click=writereview()><v-icon x-large color="#BBDEFB">mdi-border-color</v-icon></v-btn>
@@ -87,10 +87,25 @@
             <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;"/></v-tab-item>
             <v-tab>상품리뷰</v-tab>
             <!--Item review 정보 -->
-            <v-tab-item>매일 자기전 듣고 있습니다.<br>아주 깔끔한 앨범 감사합니다<br>작성자: 박진영</v-tab-item>
+            <v-tab-item><v-card v-for="review in reviews" :key=review outlined>
+              <v-list><v-list-item-content>
+                <div class="overline mb-4">작성일: {{review.review_date}}</div>
+                <v-list-item-title class="headline mb-1">{{review.title}}</v-list-item-title>
+                <v-list-item-subtitle>{{review.nickname}}</v-list-item-subtitle>
+                <v-rating
+                  v-model="review.score"
+                  color="red"
+                  dense
+                  half-increments
+                  readonly
+                  size="10"
+                ></v-rating><br><br>
+                <v-card outlined>{{review.content}}</v-card>
+              </v-list-item-content></v-list>
+              </v-card></v-tab-item>
             <v-tab>구매처</v-tab>
             <!--구매처 정보-->
-            <v-tab-item><v-card v-for="seller in sellers" :key="seller">{{seller.site_name}}<br>
+            <v-tab-item><v-card v-for="seller in sellers" :key="seller" outlined>{{seller.site_name}}<br>
             가격:{{seller.cost}}<br>{{seller.site_url}}</v-card></v-tab-item>
             </v-tabs>
           </v-card-text>
@@ -142,12 +157,34 @@ export default {
                                 }
                             }
                         })
+      this.$http.get('https://comparewise.firebaseio.com/Review.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+                for (let key in data) {
+                  var tar = data[key]
+                  if (tar==null)
+                  {
+                    continue;
+                  }
+                  if(tar.item_id === this.id){
+                     var tmp = {
+                       content: tar.content,
+                       title: tar.title,
+                       score: tar.score,
+                       nickname: tar.nickname,
+                       review_date : tar.review_date
+                     }
+                     this.reviews.push(tmp)
+                  }
+                }
+            });
   },
     data() {
     return {
       id:'',
       search:"",
       sellers:[],
+      reviews:[],
       item:{
         describer:'',
         category_id:'',
