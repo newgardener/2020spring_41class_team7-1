@@ -59,43 +59,51 @@
         dense>
         <v-list-item-group
         mandatory color="indigo">
-          <v-list-item>
-            <router-link class="routerLink" to="/main">
+          <router-link class="routerLink" to="/main">
+            <v-list-item>
               <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>            
-              </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
+                    <v-icon>mdi-home</v-icon>            
+                </v-list-item-icon>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/mypage">
-              <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
-              </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>My Page</v-list-item-title>
-          </v-list-item>
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/mypage">
+            <v-list-item>
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
+                </v-list-item-icon>
+              <v-list-item-title>My Page</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            
-            <!-- <router-link class="routerLink" v-bind:to='"/wishlist/" + user_id'> -->
-            <router-link class="routerLink" to="/wishlist">
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/wishlist">
+            <v-list-item>
               <v-list-item-icon>
                   <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>        
               </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>Wish List</v-list-item-title>
-          </v-list-item>
+              <v-list-item-title>Wish List</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/review">
-              <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
-              </v-list-item-icon>
-            </router-link>
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/compare">
+            <v-list-item>          
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-scale-balance</v-icon></v-btn>
+                </v-list-item-icon>
+              <v-list-item-title>Compare Page</v-list-item-title>
+            </v-list-item>
+          </router-link>
+
+          
+          <router-link  v-if="this.$store.state.isLogin" class="routerLink" to="/review">
+            <v-list-item>
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+                </v-list-item-icon>
             <v-list-item-title>Review</v-list-item-title>
-          </v-list-item>
+            </v-list-item>
+          </router-link>
 
         </v-list-item-group>
       </v-list>
@@ -105,23 +113,15 @@
 </template>
 
 <script>
-import { eventBus } from "./main"
-
 export default {
   name: 'App',
-  data: () => ({
-    drawer: false,
-    user_id: ''
-  }),
-  created() {
-      if(this.$store.state.isLogin){
-          var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
-          value = value? value[2] : null;
-          this.user_id = value;
-          console.log(this.user_id)
-    } 
+  components: {
   },
   methods: {
+    logout () {
+      this.$store.commit('loginFalse')
+       this.$router.replace(this.$route.query.redirect || '/main');
+    },
     setCookie(name, value, day) {
     var date = new Date();
     date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
@@ -134,20 +134,13 @@ export default {
     deleteCookie(name) {
     var date = new Date();
     document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
-    },
-    logout () {
-      this.$store.commit('loginFalse')
-      this.deleteCookie("email");
-      this.deleteCookie("name");
-      this.deleteCookie("pw");
-      this.deleteCookie("nick");
-      this.$router.replace(this.$route.query.redirect || '/main');
-    },
-  }
-
+    }
+  },
+  data: () => ({
+    drawer: false
+  }),
 };
 </script>
 
 <style>
-
 </style>
