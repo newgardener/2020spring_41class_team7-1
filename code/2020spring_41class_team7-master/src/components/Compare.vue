@@ -18,7 +18,6 @@
                             dense
                             half-increments
                             readonly
-                            size="40"
                             asspect-ratio="1.0"
                             class="mx-3"
                             ></v-rating>
