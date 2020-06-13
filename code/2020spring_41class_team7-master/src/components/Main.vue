@@ -208,6 +208,19 @@ export default {
         this.items[i].price = min_cost
       }
     },
+    setCookie(name, value, day) {
+    var date = new Date();
+    date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
+    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+    },
+    getCookie(name) {
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value? value[2] : null;
+    },
+    deleteCookie(name) {
+    var date = new Date();
+    document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+    },
     changeList (name) {
       this.list = []
       this.categoryName = name
@@ -280,6 +293,10 @@ export default {
     eventBus.$on('loginTrue', isTrue => {
       this.$store.commit('loginTrue')
     })
+    if(this.getCookie("email"))
+    {
+      eventBus.$emit("loginTrue", this.isTrue);
+    }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
