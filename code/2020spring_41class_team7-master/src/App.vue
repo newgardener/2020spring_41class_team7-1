@@ -23,7 +23,7 @@
         </v-btn>
       </router-link>
       
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
+      <!-- <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
         Logout
       </v-btn>
           
@@ -43,7 +43,7 @@
         <v-btn class="ma-2" outlined>
           Signup
         </v-btn>
-      </router-link>
+      </router-link> -->
     </v-app-bar> 
 
     <router-view :key="$route.fullPath"></router-view>
