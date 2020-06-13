@@ -86,24 +86,6 @@
             </v-list-item>
           </router-link>
 
-          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/compare">
-            <v-list-item>          
-                <v-list-item-icon>
-                    <v-btn icon><v-icon>mdi-scale-balance</v-icon></v-btn>
-                </v-list-item-icon>
-              <v-list-item-title>Compare Page</v-list-item-title>
-            </v-list-item>
-          </router-link>
-
-          
-          <router-link  v-if="this.$store.state.isLogin" class="routerLink" to="/review">
-            <v-list-item>
-                <v-list-item-icon>
-                    <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
-                </v-list-item-icon>
-            <v-list-item-title>Review</v-list-item-title>
-            </v-list-item>
-          </router-link>
 
         </v-list-item-group>
       </v-list>
@@ -120,10 +102,6 @@ export default {
   methods: {
     logout () {
       this.$store.commit('loginFalse')
-       this.deleteCookie('email')
-       this.deleteCookie('name')
-       this.deleteCookie('pw')
-       this.deleteCookie('nick')
        this.$router.replace(this.$route.query.redirect || '/main');
     },
     setCookie(name, value, day) {
