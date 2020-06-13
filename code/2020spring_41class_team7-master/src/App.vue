@@ -80,7 +80,7 @@
         <router-link v-if="!this.$store.state.isLogin" class="routerLink" to="/signup">
           <v-list-item>
               <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-logout</v-icon></v-btn>        
+                  <v-btn icon><v-icon>mdi-account</v-icon></v-btn>        
               </v-list-item-icon>
             <v-list-item-title>SignUp</v-list-item-title>
           </v-list-item>
