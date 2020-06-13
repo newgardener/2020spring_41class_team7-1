@@ -103,6 +103,7 @@ export default {
         item_id:'',
         wish_list_date:"0617"
       },
+
       //to open dialog
       dialog: false,
       multiLine: true,
@@ -110,14 +111,13 @@ export default {
 
     }
   },
-
   created() {
     this.id = this.$route.params.id
     this.wishlist.item_id = this.id
     if(this.$store.state.isLogin){
-      var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
-      value = value? value[2] : null;
-      this.wishlist.user_id = value;
+        var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
+        value = value? value[2] : null;
+        this.wishlist.user_id = value;
     }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
           return data.json();
@@ -182,13 +182,14 @@ export default {
   },
     methods:{
       writereview(){
-        this.$router.push({ name: 'Reviewwrite',params : {id:this.id}})
+        this.$router.push({ name: 'Reviewwrite', params : {id:this.id}})
       },
       pushwishlist:function(){
         if(this.$store.state.isLogin){
           console.log("push")
           this.$http.post('https://comparewise.firebaseio.com/WishList.json', this.wishlist)
           this.snackbar_content = "찜한 상품은 Wishlist에서 확인하실 수 있습니다."
+          this.$router.replace(this.$route.query.redirect || '/wishlist');
         }
         else this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
         this.snackbar = true

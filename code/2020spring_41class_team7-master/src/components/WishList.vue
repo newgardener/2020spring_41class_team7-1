@@ -1,7 +1,7 @@
 <template>
-  <div>
+    <div>
     <v-app-bar dense>
-      <div style="width: 100%;">
+      <div style="width: 80%; margin:auto;">
         <select name="category" style="width: 100%" @change="changecate($event)">
             <option value="overall" selected>전체</option>
             <option value="one">가전제품</option>
@@ -12,9 +12,7 @@
         </select>
       </div>
     </v-app-bar>
-
     <v-container>
-      
       <div style="overflow:auto; height:700px;"> <!-- height 조절로 스크롤 div 크기 조정가능 -->
         <div class = "block" id = "cate1">
           가전제품<hr>
@@ -196,7 +194,6 @@
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
         </div>
-        
         <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
           <v-tooltip bottom>
               <template v-slot:activator="{}">
@@ -343,20 +340,15 @@
       </div>
 
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-
   </div>
 </template>
 
 <script>
 import firebase from 'firebase';
+// import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
-    data(){
+      data(){
       return{
           email: "",
           wishnum: 0,
@@ -449,6 +441,7 @@ export default {
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item1[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
             location.reload();
+            this.$router.replace(this.$route.query.redirect || '/wishlist');
             })
         },
         deleted2(num) {
@@ -456,6 +449,7 @@ export default {
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item2[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
             location.reload();
+            this.$router.replace(this.$route.query.redirect || '/wishlist');
             })
         },
         deleted3(num) {
@@ -463,6 +457,7 @@ export default {
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item3[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
             location.reload();
+            this.$router.replace(this.$route.query.redirect || '/wishlist');
             })
         },
         deleted4(num) {
@@ -470,6 +465,7 @@ export default {
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item4[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
             location.reload();
+            this.$router.replace(this.$route.query.redirect || '/wishlist');
             })
         },
         deleted5(num) {
@@ -477,6 +473,7 @@ export default {
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item5[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
             location.reload();
+            this.$router.replace(this.$route.query.redirect || '/wishlist');
             })
         },
     },
@@ -581,19 +578,18 @@ export default {
         
       }
                     
-                    })
-                  
+    })            
+  })
               
-              })
-              
-            });
+});
            
       
     }
+
 }
 </script>
 
-<style scoped>
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

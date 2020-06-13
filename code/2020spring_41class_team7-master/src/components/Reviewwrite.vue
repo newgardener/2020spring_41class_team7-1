@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-container>
       <div class = "block" id = "first">
         <v-row class="ml-2">
@@ -20,20 +19,20 @@
           <div class="star_grade">
             <v-row class="ml-2" style="display: flex; justify-content: center; margin: 30px 30px">
                 <div class="starRev">
-  <span class="starR1 on" id="star1">별1_왼쪽</span>
-  <span class="starR2" id="star2">별1_오른쪽</span>
-  <span class="starR1" id="star3">별2_왼쪽</span>
-  <span class="starR2" id="star4">별2_오른쪽</span>
-  <span class="starR1" id="star5">별3_왼쪽</span>
-  <span class="starR2" id="star6">별3_오른쪽</span>
-  <span class="starR1" id="star7">별4_왼쪽</span>
-  <span class="starR2" id="star8">별4_오른쪽</span>
-  <span class="starR1" id="star9">별5_왼쪽</span>
-  <span class="starR2" id="star10">별5_오른쪽</span>
-</div>
-
-  <div value="0" id="grade"></div>
+                    <span class="starR1 on" id="star1">별1_왼쪽</span>
+                    <span class="starR2" id="star2">별1_오른쪽</span>
+                    <span class="starR1" id="star3">별2_왼쪽</span>
+                    <span class="starR2" id="star4">별2_오른쪽</span>
+                    <span class="starR1" id="star5">별3_왼쪽</span>
+                    <span class="starR2" id="star6">별3_오른쪽</span>
+                    <span class="starR1" id="star7">별4_왼쪽</span>
+                    <span class="starR2" id="star8">별4_오른쪽</span>
+                    <span class="starR1" id="star9">별5_왼쪽</span>
+                    <span class="starR2" id="star10">별5_오른쪽</span>
+                </div>
+            <div value="0" id="grade"></div>
             </v-row>
+            <p style="text-align: center">Click the star to increase rating by 0.5</p>
           </div>
           
         </div>
@@ -46,21 +45,18 @@
         <v-btn color="primary" @click="change" v-on:click.prevent="post">리뷰 등록</v-btn>
       </div>
       </form>
-
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
   </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from 'firebase'
 import { eventBus } from "../main"
+import $ from 'jquery'
+
+
 export default {
-    data(){
+      data(){
       return{
         form: {
           content: '',
@@ -184,7 +180,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

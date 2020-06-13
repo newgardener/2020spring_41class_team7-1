@@ -1,7 +1,5 @@
 <template>
   <div>
-    
-
     <v-container>
       <div class = "block" id = "first">
         <div style = "float: left; width: 20%; text-align: center;">
@@ -20,8 +18,8 @@
         <form style="padding-left: 100px;">
           <p>이름 : {{name}}</p>
           <p>별명 : {{nick}}</p>
-          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid blue;"></p>
-          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid blue;"></p>
+          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
+          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
         </form>
         
           <div class="my-2" style="margin: auto; width: 15%;">
@@ -41,20 +39,18 @@
         </div>
       </div>
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-  </div>
+  </div>  
 </template>
+
+
+
 
 <script>
 import firebase from 'firebase';
 import { eventBus } from "../main"
+
 export default {
-  
-  data() {
+    data() {
     return {
           form: {
                 password: '',
@@ -96,7 +92,9 @@ export default {
                 console.log(this.userkey)
                 this.$http.put('https://comparewise.firebaseio.com/user/'+this.userkey+'.json', {"email": this.email, "name": this.name, "nickname": this.nick, "password": this.form.password});
                 alert('비밀번호가 성공적으로 변경되었습니다.\n변경된 비밀번호로 로그인 해주세요.');
-                // logout();
+                //  logout() and direct to login page
+                this.$store.commit('loginFalse')
+                this.$router.replace(this.$route.query.redirect || '/login');
             }
           },
           edit(){
@@ -172,15 +170,12 @@ export default {
                 }
             });
   }
- /*admin.auth().verifyIdToken(idToken)
-  .then(function(decodedToken) {
-    let uid = decodedToken.uid;
-    // ...
-  }).catch(function(error) {
-    // Handle error
-  });*/
+
 }
 </script>
+
+
+
 
 <style scoped>
   .block{
@@ -195,4 +190,5 @@ export default {
   .block#second{
     text-align: center;
   }
+
 </style>

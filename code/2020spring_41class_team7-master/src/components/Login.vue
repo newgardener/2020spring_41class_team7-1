@@ -12,9 +12,9 @@
                         </div>
                     </v-card-title>
 
-                    <v-card-actions v-on:click="login" class="justify-center">
+                    <v-card-actions class="justify-center">
                         <v-btn color="blue" width="100%" height="50px" style="font-size: 20px">
-                            <button>Login</button>
+                            <button v-on:click="login">Login</button>
                         </v-btn>
                     </v-card-actions>
                 </v-card>

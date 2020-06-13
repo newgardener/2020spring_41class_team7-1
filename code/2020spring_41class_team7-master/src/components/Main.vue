@@ -25,6 +25,13 @@
                        @click="changeList(tab)">
                        {{ tab }}
                 </v-tab>
+
+                <v-tabs-items>
+                  <v-tab-item>
+
+                  </v-tab-item>
+                </v-tabs-items>
+
               </v-tabs>
             </template>   
       </v-toolbar>
@@ -71,15 +78,16 @@
                     
                     
                     <v-row class="ml-2" style="padding: 10px;">
-                      <v-rating
-                            v-model="item.score"
-                            color="pink"
-                            dense
-                            half-increments
-                            readonly
-                            size="25"
-                            class="mx-3"
-                            ></v-rating>
+                      <div v-for="n in 5"
+                            :key="n"
+                            >
+                        <v-icon v-if="item.score - n >= 0" color="amber" class="ml-1">
+                          mdi-star
+                        </v-icon>
+                        <v-icon v-if="item.score - n < 0 && item.score - n >= -0.5" color="amber" class="ml-1">
+                          mdi-star-half-full
+                        </v-icon>
+                      </div>
                       <p class="ml-2">
                         ({{ item.reviewNum }})
                       </p>
@@ -93,8 +101,8 @@
             
           <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: 0 0;">
             <v-tooltip bottom>
-              <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item)  class="ma-2">
+              <template v-slot:activator="{ on }">
+                    <v-btn icon v-on:click=Iscompare(item) dark v-on="on" class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
               </template>
@@ -103,11 +111,13 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <router-link class="routerLink" to="/wishlist">
-                <v-btn icon color="amber" dark v-on="on" class="ma-2">
-                  <v-icon x-large>mdi-star-circle</v-icon>
-                </v-btn>
-            </router-link>
+              <v-btn icon v-on:click=ToWishList(item) color="amber" dark v-on="on" class="ma-2">
+                <v-icon x-large>mdi-star-circle</v-icon>
+              </v-btn>
+              <v-snackbar v-model="snackbar">
+                    {{snackbar_content}}
+                    <v-btn color="pink" text @click="snackbar = false" > Close </v-btn>
+              </v-snackbar>
             </template>
             <span>Wish List</span>
           </v-tooltip>
@@ -123,7 +133,6 @@
       <div>&copy; {{ new Date().getFullYear() }} team7</div>
     </v-footer>
   </div>
-
 
 </template>
 
@@ -144,6 +153,18 @@ export default {
         this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
       }
     },
+    ToWishList(item){
+       if(this.$store.state.isLogin){
+          var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
+          value = value? value[2] : null;
+          this.wishlist.user_id = value;
+          this.wishlist.item_id = item.id
+          this.$http.post('https://comparewise.firebaseio.com/WishList.json', this.wishlist)
+          this.snackbar_content = "찜한 상품은 Wishlist에서 확인하실 수 있습니다."
+        }
+        else this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
+        this.snackbar = true
+    },
     itemCategory () {
       return null
     },
@@ -159,7 +180,6 @@ export default {
           this.list.push(this.items[i])
           this.currentItem = this.items[i].category_id
         }
-
       }
     },
     doSomething () {
@@ -237,16 +257,23 @@ export default {
       compare_price2:'defult',
       search:"",
       currentItem: 0,
-      tabs: ['종합랭킹', '생활용품', '패션', '뷰티', '식품', '가전제품'],
+      tabs: ['종합랭킹','생활용품', '패션', '뷰티', '식품', '가전제품'],
       sellers:[],
       items: [],
       listNum: 8,
       list: [],
+      wishlist: {
+        item_id:'',
+        user_id:'',
+        wish_list_date: new Date().toLocaleString
+      },
+      snackbar_content:"찜한 목록은 Wishlist에서 확인하실 수 있습니다.",
       //to open dialog
       dialog: false,
       drawer: false,
       tab: null,
-      drawer: false
+      drawer: false,
+      snackbar: false
     }
   },
   created() {
