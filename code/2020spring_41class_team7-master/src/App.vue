@@ -102,7 +102,11 @@ export default {
   methods: {
     logout () {
       this.$store.commit('loginFalse')
-       this.$router.replace(this.$route.query.redirect || '/main');
+      this.deleteCookie("name")
+      this.deleteCookie("email")
+      this.deleteCookie("nick")
+      this.deleteCookie("pw")
+      this.$router.replace(this.$route.query.redirect || '/main');
     },
     setCookie(name, value, day) {
     var date = new Date();
