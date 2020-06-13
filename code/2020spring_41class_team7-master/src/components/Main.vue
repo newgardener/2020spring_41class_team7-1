@@ -126,6 +126,12 @@
         </v-col>
       </v-row>
     </v-container>
+    <template>
+      <v-snackbar v-model="snackbar">
+            동일한 카테고리의 상품만 비교 가능합니다.
+            <v-btn color="pink" text @click="snackbar = false" > Close </v-btn>
+        </v-snackbar>
+    </template>
 
 <!-- Footer -->
     <v-footer class="pa-3" fixed>
@@ -146,9 +152,19 @@ export default {
       if(this.compareID1 == 'defult'){
           this.compareID1 = item.id
           this.compare_price1 = item.price
+          this.comparecategory1 = item.category_id;
       }
       else{
         if(this.compareID1 === item.id) return;
+        if(this.comparecategory1 != item.category_id){
+          this.compareID1 = 'defult'
+          this.compareID2 = 'defult'
+          this.compare_price1 = 'defult'
+          this.compare_price2 = 'defult'
+          this.comparecategory1 = 'defult'
+          this.snackbar = true;
+          return;
+        }
         this.compareID2 = item.id
         this.compare_price2 = item.price
         this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
