@@ -1,18 +1,6 @@
  <template>
-    <div class="login">
-        <router-link to="/main">
-            <v-btn 
-            icon 
-            width="auto" 
-            height="auto"  
-            class="ma-1"
-            >
-            <v-avatar size="90">
-            <img src="../assets/logo.png">
-            </v-avatar>
-            </v-btn>  
-        </router-link> 
-            <v-layout class="justify-center">
+    <div>
+            <v-layout class="justify-center" style="padding: 50px auto">
                 <v-card>
                     <v-img src="../assets/loginLogo.png" width="500px"></v-img>
                     <v-card-title primary-title>
@@ -24,9 +12,9 @@
                         </div>
                     </v-card-title>
 
-                    <v-card-actions class="justify-center">
+                    <v-card-actions v-on:click="login" class="justify-center">
                         <v-btn color="blue" width="100%" height="50px" style="font-size: 20px">
-                            <button v-on:click="login">Login</button>
+                            <button>Login</button>
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -39,14 +27,14 @@
 import firebase from 'firebase'
 import { eventBus } from "../main"
 
+
 export default {
     name: 'login',
     data() {
         return {
             userInfo: {
                 email: '',
-                password: '',
-                nickname: ''
+                password: ''
             },
             isTrue: false,
             idTrue: false,
@@ -54,7 +42,8 @@ export default {
         }
     },
     methods: {
-       setCookie(name, value, day) {
+
+        setCookie(name, value, day) {
         var date = new Date();
         date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
         document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
@@ -68,7 +57,6 @@ export default {
         document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
          },
 
-
         login() {
             this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
                 return data.json();
@@ -81,6 +69,8 @@ export default {
                         eventBus.$emit("loginTrue", this.isTrue);
                         this.setCookie("email", data[key].email,1);
                         this.setCookie("nick", data[key].nickname,1);
+                        this.setCookie("pw", data[key].password,1);
+                        this.setCookie("name", data[key].name,1);
                         alert('Successfully logged in');
                         this.$router.replace(this.$route.query.redirect || '/main');
                         break;
@@ -118,5 +108,8 @@ export default {
     }
     form, input{
         width: 500px;
+    }
+    div.v-card.v-sheet.theme--light {
+        margin-top: 50px;
     }
 </style>
