@@ -183,7 +183,14 @@ export default {
   },
     methods:{
       writereview(){
-        this.$router.push({ name: 'Reviewwrite', params : {id:this.id}})
+        if(this.$store.state.isLogin){
+          this.$router.push({ name: 'Reviewwrite', params : {id:this.id}})
+        }
+        else{
+            this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
+            this.snackbar = true
+            return;
+        }
       },
       pushwishlist:function(){
         if(this.$store.state.isLogin){
