@@ -56,11 +56,11 @@
               <v-tab-item>
                 <v-card v-for="seller in sellers" :key="seller">
                   <template style="display: block">
-                    <div v-if="seller.site_name === 'G마켓'"><img src="../assets/gmarket.png" alt="Gmarket" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '옥션'"><img src="../assets/auction.png" alt="Auction"  style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '11번가'"><img src="../assets/11street.png" alt="11번가" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '인터파크'"><img src="../assets/interpark.png" alt="Interpark" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '쿠팡'"><img src="../assets/coupang.png" alt="Coupang" style="width: 15%; height: 15%;"></div>
+                    <div v-if="seller.site_name === 'G마켓'"><v-img aspect-ratio="1.0" src="../assets/gmarket.png" alt="Gmarket" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '옥션'"><v-img aspect-ratio="1.0" src="../assets/auction.png" alt="Auction"  style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '11번가'"><v-img aspect-ratio="1.0" src="../assets/11street.png" alt="11번가" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '인터파크'"><v-img aspect-ratio="1.0" src="../assets/interpark.png" alt="Interpark" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '쿠팡'"><v-img aspect-ratio="1.0" src="../assets/coupang.png" alt="Coupang" style="width: 15%; height: 15%;"/></div>
                   </template>
                   <v-icon x-large>mdi-cash</v-icon>{{seller.cost}}원<br>
                   <v-icon x-large>mdi-cart</v-icon><a :href="seller.site_url">{{seller.site_url}}</a>
@@ -81,6 +81,7 @@ import firebase from 'firebase'
 export default {
   data() {
     return {
+      nickname: '',
       snackbar_content:"찜한 목록은 Wishlist에서 확인하실 수 있습니다.",
       id: '',
       search: "",
