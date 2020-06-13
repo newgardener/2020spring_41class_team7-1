@@ -82,9 +82,16 @@
               <v-list-item-icon>
                   <v-btn icon><v-icon>mdi-logout</v-icon></v-btn>        
               </v-list-item-icon>
-            <v-list-item-title>Sign Up</v-list-item-title>
+            <v-list-item-title>SignUp</v-list-item-title>
           </v-list-item>
         </router-link>
+
+          <v-list-item @click="logout()" v-if="this.$store.state.isLogin">
+              <v-list-item-icon>
+                  <v-btn icon><v-icon>mdi-logout</v-icon></v-btn>        
+              </v-list-item-icon>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
 
         <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/mypage">
           <v-list-item>
