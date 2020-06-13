@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-container>
       <div class = "block" id = "first">
         <v-row class="ml-2">
@@ -20,20 +19,20 @@
           <div class="star_grade">
             <v-row class="ml-2" style="display: flex; justify-content: center; margin: 30px 30px">
                 <div class="starRev">
-  <span class="starR1 on" id="star1">별1_왼쪽</span>
-  <span class="starR2" id="star2">별1_오른쪽</span>
-  <span class="starR1" id="star3">별2_왼쪽</span>
-  <span class="starR2" id="star4">별2_오른쪽</span>
-  <span class="starR1" id="star5">별3_왼쪽</span>
-  <span class="starR2" id="star6">별3_오른쪽</span>
-  <span class="starR1" id="star7">별4_왼쪽</span>
-  <span class="starR2" id="star8">별4_오른쪽</span>
-  <span class="starR1" id="star9">별5_왼쪽</span>
-  <span class="starR2" id="star10">별5_오른쪽</span>
-</div>
-
-  <div value="0" id="grade"></div>
+                    <span class="starR1 on" id="star1">별1_왼쪽</span>
+                    <span class="starR2" id="star2">별1_오른쪽</span>
+                    <span class="starR1" id="star3">별2_왼쪽</span>
+                    <span class="starR2" id="star4">별2_오른쪽</span>
+                    <span class="starR1" id="star5">별3_왼쪽</span>
+                    <span class="starR2" id="star6">별3_오른쪽</span>
+                    <span class="starR1" id="star7">별4_왼쪽</span>
+                    <span class="starR2" id="star8">별4_오른쪽</span>
+                    <span class="starR1" id="star9">별5_왼쪽</span>
+                    <span class="starR2" id="star10">별5_오른쪽</span>
+                </div>
+            <div value="0" id="grade"></div>
             </v-row>
+            <p style="text-align: center">Click the star to increase rating by 0.5</p>
           </div>
           
         </div>
@@ -46,21 +45,18 @@
         <v-btn color="primary" @click="change" v-on:click.prevent="post">리뷰 등록</v-btn>
       </div>
       </form>
-
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
   </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from 'firebase'
 import { eventBus } from "../main"
+import $ from 'jquery'
+
+
 export default {
-    data(){
+      data(){
       return{
         form: {
           content: '',
@@ -78,6 +74,13 @@ export default {
         x: 0,
         y: 0,
         value: 0,
+        //
+        itemkey: '',
+        
+        total_score: 0,
+        review_volume: 0,
+        itemForm: new Object(),
+        
       }
     },
     methods: {
@@ -89,7 +92,19 @@ export default {
             else {
                 this.$http.post('https://comparewise.firebaseio.com/Review.json', this.form).then(function(data){
                 alert('성공적으로 등록되었습니다.');
-                this.$router.replace(this.$route.query.redirect || '/main');
+                //score 갱신
+                this.total_score = this.total_score + this.form.score;
+                this.itemForm.total_score = this.total_score;
+                
+                this.review_volume++;
+                this.itemForm.review_volume = this.review_volume;
+
+                var avg_score = (this.total_score/this.review_volume).toFixed(1);
+                this.itemForm.avg_score = parseFloat(avg_score);
+                
+                
+                this.$http.put('https://comparewise.firebaseio.com/item/'+this.itemkey+'.json', this.itemForm);
+                this.$router.push(this.$route.query.redirect || '/main');
             })
             }
         }, 
@@ -106,7 +121,7 @@ export default {
           this.$store.commit('loginFalse')
         },
         change (){
-          this.form.score = document.getElementById("grade").value;
+          this.form.score = parseFloat(document.getElementById("grade").value);
         }
     },
     mounted() {
@@ -175,16 +190,23 @@ export default {
                   if(data[key].item_id==this.form.item_id)
                   {
                     var tar = data[key]
+                    this.itemForm = tar
                     this.item_name = tar.item_name
                     this.item_img = tar.img_src
+                    //SCORE 갱신
+                    
+                    this.total_score = data[key].total_score;
+                    this.review_volume = data[key].review_volume;
+                    this.itemkey = key;                    
                   }
                 }
             });
-    }
+     
+    }  
 }
 </script>
-
-<style scoped>
+4
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

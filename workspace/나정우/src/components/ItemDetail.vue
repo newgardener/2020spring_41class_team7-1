@@ -1,7 +1,7 @@
 <template>
     <div>
     <v-card max-width="80%" style="margin-left: auto; margin-right: auto;">
-        <img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;"/>
+        <v-img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;" aspect-ratio="1.0"/>
         <v-card-title class="display-1">{{item.name}}<v-spacer></v-spacer>
         <v-btn icon class="ma-2" v-on:click=writereview()><v-icon x-large color="#BBDEFB">mdi-border-color</v-icon></v-btn>
         <div><v-btn icon class="ma-2" v-on:click="pushwishlist()"><v-icon x-large color="#F48FB1">mdi-heart</v-icon></v-btn>
@@ -31,13 +31,13 @@
             <v-tabs v-model="tab" background-color="deep-purple accent-4" class="elevation-2" dark grow >
             <v-tab>상품설명</v-tab>
             <!--Item 설명 연결 -->
-            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;"/></v-tab-item>
+            <v-tab-item><v-img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;" aspect-ratio="1.0" /></v-tab-item>
 
             <v-tab>상품리뷰</v-tab>
             <!--Item review 정보 -->
               <v-tab-item><v-card v-for="review in reviews" :key=review outlined style="padding: 10px 10px">
                 <v-list><v-list-item-content>
-                  <div class="overline mb-4">작성일: {{review.review_date}} ({{review.user_id}})</div>
+                  <div class="overline mb-4">작성일: {{review.review_date}} ({{review.nickname}})</div>
                   <v-list-item-title class="headline mb-1">{{review.title}}</v-list-item-title>
                     <v-rating
                     v-model="review.score"
@@ -56,11 +56,11 @@
               <v-tab-item>
                 <v-card v-for="seller in sellers" :key="seller">
                   <template style="display: block">
-                    <div v-if="seller.site_name === 'G마켓'"><img src="../assets/gmarket.png" alt="Gmarket" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '옥션'"><img src="../assets/auction.png" alt="Auction"  style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '11번가'"><img src="../assets/11street.png" alt="11번가" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '인터파크'"><img src="../assets/interpark.png" alt="Interpark" style="width: 15%; height: 15%;"></div>
-                    <div v-if="seller.site_name === '쿠팡'"><img src="../assets/coupang.png" alt="Coupang" style="width: 15%; height: 15%;"></div>
+                    <div v-if="seller.site_name === 'G마켓'"><v-img aspect-ratio="1.0" src="../assets/gmarket.png" alt="Gmarket" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '옥션'"><v-img aspect-ratio="1.0" src="../assets/auction.png" alt="Auction"  style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '11번가'"><v-img aspect-ratio="1.0" src="../assets/11street.png" alt="11번가" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '인터파크'"><v-img aspect-ratio="1.0" src="../assets/interpark.png" alt="Interpark" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '쿠팡'"><v-img aspect-ratio="1.0" src="../assets/coupang.png" alt="Coupang" style="width: 15%; height: 15%;"/></div>
                   </template>
                   <v-icon x-large>mdi-cash</v-icon>{{seller.cost}}원<br>
                   <v-icon x-large>mdi-cart</v-icon><a :href="seller.site_url">{{seller.site_url}}</a>
@@ -103,6 +103,7 @@ export default {
         item_id:'',
         wish_list_date:"0617"
       },
+
       //to open dialog
       dialog: false,
       multiLine: true,
@@ -110,14 +111,13 @@ export default {
 
     }
   },
-
   created() {
     this.id = this.$route.params.id
     this.wishlist.item_id = this.id
     if(this.$store.state.isLogin){
-      var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
-      value = value? value[2] : null;
-      this.wishlist.user_id = value;
+        var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
+        value = value? value[2] : null;
+        this.wishlist.user_id = value;
     }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
           return data.json();
@@ -146,6 +146,7 @@ export default {
             if (tar.item_id === this.id){
             var tmp =
             {
+              nickname: tar.nickname,
               title: tar.title,
               review_date: tar.review_date,
               content: tar.content,
@@ -182,13 +183,21 @@ export default {
   },
     methods:{
       writereview(){
-        this.$router.push({ name: 'Reviewwrite',params : {id:this.id}})
+        if(this.$store.state.isLogin){
+          this.$router.push({ name: 'Reviewwrite', params : {id:this.id}})
+        }
+        else{
+            this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
+            this.snackbar = true
+            return;
+        }
       },
       pushwishlist:function(){
         if(this.$store.state.isLogin){
           console.log("push")
           this.$http.post('https://comparewise.firebaseio.com/WishList.json', this.wishlist)
           this.snackbar_content = "찜한 상품은 Wishlist에서 확인하실 수 있습니다."
+          this.$router.replace(this.$route.query.redirect || '/wishlist');
         }
         else this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
         this.snackbar = true

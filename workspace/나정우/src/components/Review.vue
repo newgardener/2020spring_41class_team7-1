@@ -1,7 +1,6 @@
 <template>
-  <div>
-
-    <v-container>
+<div>
+      <v-container>
       <div class = "block" id = "first">
         
         <v-row class="ml-2">
@@ -72,19 +71,16 @@
         </v-col>
       </div>
     </v-container>
+</div>
 
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-  </div>
 </template>
 
 <script>
 import firebase from 'firebase';
 import { eventBus } from "../main"
+
 export default {
-  
+
   data() {
     return {
             form: {
@@ -171,17 +167,11 @@ export default {
                   });
                 
   }
- /*admin.auth().verifyIdToken(idToken)
-  .then(function(decodedToken) {
-    let uid = decodedToken.uid;
-    // ...
-  }).catch(function(error) {
-    // Handle error
-  });*/
+
 }
 </script>
 
-<style scoped>
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

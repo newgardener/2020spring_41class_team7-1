@@ -18,7 +18,7 @@
                             dense
                             half-increments
                             readonly
-                            size="40"
+                            asspect-ratio="1.0"
                             class="mx-3"
                             ></v-rating>
                             <div>({{item.reviewNum}})</div>
@@ -77,7 +77,7 @@ export default {
                             break;
                           case 2:
                             this.items[0].category_id = "카테고리 : 패션";
-                            this.items[0].color = "용량 : " + tar.color;
+                            this.items[0].color = "색상 : " + tar.color;
                             this.items[0].material = "재질 : " + tar.material;
                             this.items[0].size_range = "사이즈 범위 : " + tar.size_range;
                             break;
@@ -123,7 +123,7 @@ export default {
                             break;
                           case 2:
                             this.items[1].category_id = "카테고리 : 패션";
-                            this.items[1].color = "용량 : " + tar.color;
+                            this.items[1].color = "색상 : " + tar.color;
                             this.items[1].material = "재질 : " + tar.material;
                             this.items[1].size_range = "사이즈 범위 : " + tar.size_range;
                             break;
