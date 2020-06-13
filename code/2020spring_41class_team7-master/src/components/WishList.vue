@@ -440,40 +440,40 @@ export default {
           console.log(this.item1[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item1[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
-            this.$router.replace(this.$route.query.redirect || '/wishlist');
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted2(num) {
           console.log(this.item2[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item2[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
-            this.$router.replace(this.$route.query.redirect || '/wishlist');
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted3(num) {
           console.log(this.item3[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item3[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
-            this.$router.replace(this.$route.query.redirect || '/wishlist');
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted4(num) {
           console.log(this.item4[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item4[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
-            this.$router.replace(this.$route.query.redirect || '/wishlist');
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted5(num) {
           console.log(this.item5[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item5[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
-            this.$router.replace(this.$route.query.redirect || '/wishlist');
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
     },
