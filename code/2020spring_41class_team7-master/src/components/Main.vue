@@ -126,12 +126,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <template>
-      <v-snackbar v-model="snackbar">
-            동일한 카테고리의 상품만 비교 가능합니다.
-            <v-btn color="pink" text @click="snackbar = false" > Close </v-btn>
-        </v-snackbar>
-    </template>
 
 <!-- Footer -->
     <v-footer class="pa-3" fixed>
@@ -162,6 +156,7 @@ export default {
           this.compare_price1 = 'defult'
           this.compare_price2 = 'defult'
           this.comparecategory1 = 'defult'
+          this.snackbar_content = "동일한 카테고리 아이템만 비교 가능합니다."
           this.snackbar = true;
           return;
         }
