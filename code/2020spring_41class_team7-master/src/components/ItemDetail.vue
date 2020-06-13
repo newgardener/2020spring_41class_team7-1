@@ -37,7 +37,7 @@
             <!--Item review 정보 -->
               <v-tab-item><v-card v-for="review in reviews" :key=review outlined style="padding: 10px 10px">
                 <v-list><v-list-item-content>
-                  <div class="overline mb-4">작성일: {{review.review_date}} ({{review.user_id}})</div>
+                  <div class="overline mb-4">작성일: {{review.review_date}} ({{review.nickname}})</div>
                   <v-list-item-title class="headline mb-1">{{review.title}}</v-list-item-title>
                     <v-rating
                     v-model="review.score"
@@ -81,7 +81,6 @@ import firebase from 'firebase'
 export default {
   data() {
     return {
-      nickname: '',
       snackbar_content:"찜한 목록은 Wishlist에서 확인하실 수 있습니다.",
       id: '',
       search: "",
@@ -147,6 +146,7 @@ export default {
             if (tar.item_id === this.id){
             var tmp =
             {
+              nickname: tar.nickname,
               title: tar.title,
               review_date: tar.review_date,
               content: tar.content,
