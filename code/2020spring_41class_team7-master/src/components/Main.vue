@@ -148,6 +148,7 @@ export default {
           this.compare_price1 = item.price
       }
       else{
+        if(this.compareID1 === item.id) return;
         this.compareID2 = item.id
         this.compare_price2 = item.price
         this.$router.push({ name: 'Compare', params: {id1 : this.compareID1, id2 : this.compareID2, price1 : this.compare_price1, price2: this.compare_price2}})
