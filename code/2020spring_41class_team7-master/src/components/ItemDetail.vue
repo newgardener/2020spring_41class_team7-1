@@ -1,7 +1,7 @@
 <template>
     <div>
     <v-card max-width="80%" style="margin-left: auto; margin-right: auto;">
-        <img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;"/>
+        <v-img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;" aspect-ratio="1.0"/>
         <v-card-title class="display-1">{{item.name}}<v-spacer></v-spacer>
         <v-btn icon class="ma-2" v-on:click=writereview()><v-icon x-large color="#BBDEFB">mdi-border-color</v-icon></v-btn>
         <div><v-btn icon class="ma-2" v-on:click="pushwishlist()"><v-icon x-large color="#F48FB1">mdi-heart</v-icon></v-btn>
@@ -31,7 +31,7 @@
             <v-tabs v-model="tab" background-color="deep-purple accent-4" class="elevation-2" dark grow >
             <v-tab>상품설명</v-tab>
             <!--Item 설명 연결 -->
-            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;"/></v-tab-item>
+            <v-tab-item><v-img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;" aspect-ratio="1.0" /></v-tab-item>
 
             <v-tab>상품리뷰</v-tab>
             <!--Item review 정보 -->
