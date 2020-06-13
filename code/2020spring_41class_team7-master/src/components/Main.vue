@@ -295,6 +295,10 @@ export default {
     })
     if(this.getCookie("email"))
     {
+      this.setCookie("email", this.getCookie("email"),1);
+      this.setCookie("nick", this.getCookie("nick"),1);
+      this.setCookie("pw", this.getCookie("pw"),1);
+      this.setCookie("name", this.getCookie("name"),1);
       eventBus.$emit("loginTrue", this.isTrue);
     }
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
