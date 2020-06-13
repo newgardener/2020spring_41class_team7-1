@@ -48,7 +48,6 @@
 <script>
 import firebase from 'firebase';
 import { eventBus } from "../main"
-
 export default {
     data() {
     return {
@@ -80,6 +79,10 @@ export default {
           this.deleteCookie("email")
           this.$store.commit('loginFalse')
         },
+        deleteCookie(name) {
+          var date = new Date();
+          document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+        },
         post: function() {
             console.log(this.form)
             if (!this.npassword || !this.form.password){
@@ -94,6 +97,10 @@ export default {
                 alert('비밀번호가 성공적으로 변경되었습니다.\n변경된 비밀번호로 로그인 해주세요.');
                 //  logout() and direct to login page
                 this.$store.commit('loginFalse')
+                this.deleteCookie("name")
+                this.deleteCookie("email")
+                this.deleteCookie("nick")
+                this.deleteCookie("pw")
                 this.$router.replace(this.$route.query.redirect || '/login');
             }
           },
@@ -170,7 +177,6 @@ export default {
                 }
             });
   }
-
 }
 </script>
 
@@ -190,5 +196,4 @@ export default {
   .block#second{
     text-align: center;
   }
-
 </style>
