@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <v-container>
       <div class = "block" id = "first">
         <v-row class="ml-2">
@@ -57,7 +58,6 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
     data(){
@@ -182,7 +182,6 @@ export default {
             });
     }
 }
-
 </script>
 
 <style scoped>

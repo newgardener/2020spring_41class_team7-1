@@ -59,50 +59,51 @@
         dense>
         <v-list-item-group
         mandatory color="indigo">
-          <v-list-item>
-            <router-link class="routerLink" to="/main">
+          <router-link class="routerLink" to="/main">
+            <v-list-item>
               <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>            
-              </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
+                    <v-icon>mdi-home</v-icon>            
+                </v-list-item-icon>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/mypage">
-              <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
-              </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>My Page</v-list-item-title>
-          </v-list-item>
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/mypage">
+            <v-list-item>
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-account</v-icon></v-btn>
+                </v-list-item-icon>
+              <v-list-item-title>My Page</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/wishlist">
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/wishlist">
+            <v-list-item>
               <v-list-item-icon>
                   <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>        
               </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>Wish List</v-list-item-title>
-          </v-list-item>
+              <v-list-item-title>Wish List</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/compare">
-              <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-scale-balance</v-icon></v-btn>
-              </v-list-item-icon>
-            </router-link>
-            <v-list-item-title>Compare Page</v-list-item-title>
-          </v-list-item>
+          <router-link v-if="this.$store.state.isLogin" class="routerLink" to="/compare">
+            <v-list-item>          
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-scale-balance</v-icon></v-btn>
+                </v-list-item-icon>
+              <v-list-item-title>Compare Page</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item>
-            <router-link class="routerLink" to="/review">
-              <v-list-item-icon>
-                  <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
-              </v-list-item-icon>
-            </router-link>
+          
+          <router-link  v-if="this.$store.state.isLogin" class="routerLink" to="/review">
+            <v-list-item>
+                <v-list-item-icon>
+                    <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+                </v-list-item-icon>
             <v-list-item-title>Review</v-list-item-title>
-          </v-list-item>
+            </v-list-item>
+          </router-link>
 
         </v-list-item-group>
       </v-list>
@@ -112,7 +113,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
   components: {
@@ -143,5 +143,4 @@ export default {
 </script>
 
 <style>
-
 </style>

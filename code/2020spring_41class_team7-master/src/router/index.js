@@ -29,7 +29,8 @@ const routes = [{
     {
         path: '/itemdetail/:id',
         name: 'ItemDetail',
-        component: ItemDetail
+        component: ItemDetail,
+        props: true
     },
     {
         path: '/login',

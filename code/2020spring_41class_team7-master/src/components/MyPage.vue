@@ -1,5 +1,7 @@
 <template>
   <div>
+    
+
     <v-container>
       <div class = "block" id = "first">
         <div style = "float: left; width: 20%; text-align: center;">
@@ -18,8 +20,8 @@
         <form style="padding-left: 100px;">
           <p>이름 : {{name}}</p>
           <p>별명 : {{nick}}</p>
-          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
-          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
+          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid blue;"></p>
+          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid blue;"></p>
         </form>
         
           <div class="my-2" style="margin: auto; width: 15%;">
@@ -49,7 +51,6 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
   

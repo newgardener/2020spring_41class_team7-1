@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <v-container>
       <div class = "block" id = "first">
         
@@ -81,7 +82,6 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
   

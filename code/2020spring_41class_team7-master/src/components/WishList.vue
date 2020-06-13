@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar dense>
-      <div style="width: 80%; margin:auto;">
+      <div style="width: 100%;">
         <select name="category" style="width: 100%" @change="changecate($event)">
             <option value="overall" selected>전체</option>
             <option value="one">가전제품</option>
@@ -12,7 +12,9 @@
         </select>
       </div>
     </v-app-bar>
+
     <v-container>
+      
       <div style="overflow:auto; height:700px;"> <!-- height 조절로 스크롤 div 크기 조정가능 -->
         <div class = "block" id = "cate1">
           가전제품<hr>
@@ -194,6 +196,7 @@
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
         </div>
+        
         <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
           <v-tooltip bottom>
               <template v-slot:activator="{}">
@@ -351,9 +354,7 @@
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
-
 export default {
     data(){
       return{
