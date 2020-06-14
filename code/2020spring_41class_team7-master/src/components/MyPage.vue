@@ -2,8 +2,8 @@
   <div>
     <v-container>
       <div class = "block" id = "first">
-        <div style = "float: left; width: 20%; text-align: center;">
-          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="100px" data-height="100px"></span>
+        <div style = "float: left; width: 15%; text-align: center;">
+          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219); width: 40%; height: 25%;"></span>
         </div>
         <div style = "font-size: 40px;">{{nick}} </div>
         <div>{{name}} 님, 안녕하세요.
@@ -13,13 +13,13 @@
         </div>
       </div>
 
-      <div class = "block" id = "edit" style = "width: 50%; margin: auto; margin-bottom: 20px; display: none;">
-        내 정보 수정<hr><br>
-        <form style="padding-left: 100px;">
+      <div class = "block" id = "edit" style = "width: 75%; margin: auto; margin-bottom: 20px; display: none;">
+        <form style="padding: 10px;">
+          내 정보 수정<hr><br>
           <p>이름 : {{name}}</p>
           <p>별명 : {{nick}}</p>
-          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
-          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid black; border-radius: 3px;"></p>
+          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 30%; border: 1px solid black; border-radius: 3px;"></p>
+          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 30%; border: 1px solid black; border-radius: 3px;"></p>
         </form>
         
           <div class="my-2" style="margin: auto; width: 15%;">
@@ -39,6 +39,10 @@
         </div>
       </div>
     </v-container>
+    <v-footer class="pa-3" fixed>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }} team7</div>
+    </v-footer>
   </div>  
 </template>
 
