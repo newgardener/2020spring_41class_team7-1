@@ -24,6 +24,7 @@
 + 신정원<br>
 + 신한솔<br>
 + 한승하<br>
+> Compare, Item detail component 담당<br>
 
 ## <div id = "Documents">문서 소개</div>
 + /code: 어플리케이션 코드
