@@ -22,8 +22,8 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 15%; text-align: center;">
-            <img :src=item5.img style = "width: 75%; height: 75%;">
+        <div style = "float: left; width: 15%; text-align: center; margin: auto;">
+            <img :src=item5.img style = "width: 100%; height: 70%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
@@ -74,8 +74,8 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 15%; text-align: center;">
-            <img :src=item3.img style = "width: 75%; height: 75%;">
+        <div style = "float: left; width: 15%; text-align: center;  margin: auto;">
+            <img :src=item3.img style = "width: 100%; height: 70%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
@@ -125,8 +125,8 @@
         :key="i"
           >
         <v-row class="ml-2">
-<div style = "float: left; width: 15%; text-align: center;">
-            <img :src=item1.img style = "width: 75%; height: 75%;">
+<div style = "float: left; width: 15%; text-align: center;  margin: auto;">
+            <img :src=item1.img style = "width: 100%; height: 70%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
@@ -177,8 +177,8 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 15%; text-align: center;">
-            <img :src=item4.img style = "width: 75%; height: 75%;">
+        <div style = "float: left; width: 15%; text-align: center;  margin: auto;">
+            <img :src=item4.img style = "width: 100%; height: 70%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
@@ -229,8 +229,8 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 20%; text-align: center;">
-            <img :src=item2.img style = "width: 75%; height: 75%;">
+        <div style = "float: left; width: 20%; text-align: center;  margin: auto;">
+            <img :src=item2.img style = "width: 100%; height: 70%;">
         </div>
 
         <div style = "float: left; width: 25%; text-align: center; margin: auto;">

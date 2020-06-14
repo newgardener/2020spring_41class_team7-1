@@ -20,7 +20,7 @@
             내용
         </div>
         <div style = "float: left; width: 10%; text-align: center;">
-            리뷰일
+            일자
         </div>
         </v-row>
         
@@ -32,7 +32,7 @@
         <v-row class="ml-2">
          
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
-            <img :src=item[i].img style = "width: 75%; height: 75%;">
+            <img :src=item[i].img style = "width: 90%; height: 90%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">

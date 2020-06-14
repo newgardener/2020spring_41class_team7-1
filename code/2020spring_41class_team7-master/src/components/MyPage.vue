@@ -2,8 +2,8 @@
   <div>
     <v-container>
       <div class = "block" id = "first">
-        <div style = "float: left; width: 15%; text-align: center;">
-          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219); width: 40%; height: 25%;"></span>
+        <div style = "float: left; width: 30%; max-width: 100px; text-align: center;">
+          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219); width: 80%; height: 80%;"></span>
         </div>
         <div style = "font-size: 40px;">{{nick}} </div>
         <div>{{name}} 님, 안녕하세요.

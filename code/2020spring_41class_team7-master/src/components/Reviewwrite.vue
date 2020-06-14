@@ -39,6 +39,7 @@
       <div class="my-2" style="text-align:center;">
         <v-btn color="primary" @click="change" v-on:click.prevent="post">리뷰 등록</v-btn>
       </div>
+      <div style="height: 50px;"></div>
       </form>
     </v-container>
     <v-footer class="pa-3" fixed>
