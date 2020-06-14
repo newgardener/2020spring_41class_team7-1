@@ -32,14 +32,6 @@
             </v-card>
     </v-layout>
 
-    <div v-if="submitted">
-        <v-card-actions class="justify-center">
-            <v-btn depressed large style="font-size: 20px">
-                <router-link to="/login">Login</router-link>
-            </v-btn>
-        </v-card-actions>
-    </div>
-
 
   </div>
     
@@ -90,10 +82,19 @@ export default {
                         this.idError = true;
                     }
                 }
-                if (this.idError) {
+                if (this.idError && this.validEmail(this.form.email)) {
                     alert('Error: This id already exists. choose another one.')
+                } else if (!this.idError && !this.validEmail(this.form.email)) {
+                    alert('Valid email form is required ex) apple@gmail.com')
+                }
+                else {
+                    alert('Your id is fine to use.')
                 }
             })
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
         }
     }
 }
