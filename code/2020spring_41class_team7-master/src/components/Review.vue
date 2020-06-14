@@ -10,13 +10,13 @@
         <div style = "float: left; width: 20%; text-align: center;">
             상품명
         </div>
-        <div style = "float: left; width: 20%; text-align: center;">
+        <div style = "float: left; width: 10%; text-align: center;">
             별점
         </div>
-        <div style = "float: left; width: 10%; text-align: center;">
+        <div style = "float: left; width: 15%; text-align: center;">
             제목
         </div>
-        <div style = "float: left; width: 20%; text-align: center;">
+        <div style = "float: left; width: 25%; text-align: center;">
             내용
         </div>
         <div style = "float: left; width: 10%; text-align: center;">
@@ -31,46 +31,33 @@
         
         <v-row class="ml-2">
          
-        <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item[i].img></v-avatar>
+        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+            <img :src=item[i].img style = "width: 75%; height: 75%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item[i].name}}
         </div>
-            <div style = "float: left; width: 20%; margin: auto;">
-                <v-row class="ml-2" style="display: flex; justify-content: center;">
-                <div v-for="n in 5"
-                                :key="n">
-                    <v-icon v-if="review.score - n >= 0" color="amber" class="ml-1">
-                      mdi-star
-                    </v-icon>
-                    <v-icon v-if="review.score - n < 0 && review.score - n >= -0.5" color="amber" class="ml-1">
-                      mdi-star-half-full
-                    </v-icon>
-                    <v-icon v-if="review.score - n <= -1" color="amber" class="ml-1">
-                      mdi-star-outline
-                    </v-icon>
-                </div>
-                </v-row>
+            <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+                    {{review.score}}
             </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 15%; text-align: center; margin: auto;">
             {{review.title}}
         </div>
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{review.content}}
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{review.review_date}}
         </div>
-                </v-row>
+        </v-row>
         </v-col>
       </div>
     </v-container>
+    <v-footer class="pa-3" fixed>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }} team7</div>
+    </v-footer>
 </div>
 
 </template>
@@ -78,9 +65,7 @@
 <script>
 import firebase from 'firebase';
 import { eventBus } from "../main"
-
 export default {
-
   data() {
     return {
             form: {
@@ -142,6 +127,8 @@ export default {
                             content: tar.content,
                             review_date: tar.review_date,
                         }
+                    tmp.review_date = tmp.review_date.substr(5,5)
+                    console.log(tmp.review_date)
                     this.review.push(tmp)
                     this.reviewnum = this.reviewnum + 1
                   }
@@ -160,14 +147,12 @@ export default {
                                     img: tar.img_src,
                                   }
                                 this.item.push(tmp)
-                                console.log(tmp)
                                 }
                             }
                         }})
                   });
                 
   }
-
 }
 </script>
 
