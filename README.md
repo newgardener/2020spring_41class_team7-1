@@ -14,15 +14,31 @@
 ## <div id = "Members">팀 소개</div>
 ### 팀장
 + 오승진<br>
+> firebase realtime database와 main 화면 item list와 연동하여 display<br>
+> user_info를 cookie를 통하여, mypage에 전달하여, 정보를 display<br>
+> firebase project 및 github 관리<br>
 
 ### 팀원
 + 나정우<br>
+> vuetify 플러그인을 사용한 vue.js<br>
+> 프론트 엔드 메인페이지 작성 <br>
+> db와 크롤링 연동을 통한 랭킹시스템 코드작성<br>
+> 리뷰 작성시 db 반영하여 랭킹반영<br>
+> 프론트 엔드 전반적 오류수정<br>
+> 키워드를 활용한 검색기능 구현<br>
 + 박원호<br>
 > puppeteer & node.js를 이용한 item web crawler 개발<br>
 > 서버리스 배포 플랫폼인 vercel을 이용한 프로젝트 웹 배포<br>
 > Reactive-native-webview를 이용한 프로젝트 전용 웹뷰어 App 개발<br>
 + 신정원<br>
+> signup & login component 개발<br>
+> User info와 firebase 연동<br>
+> 전체 UI/UX 디자인 통일<br>
 + 신한솔<br>
+> Mypage - 닉네임, 이름, 리뷰 수와 wishlist의 상품 수 출력, 비밀번호 변경 가능<br>
+> Review -  DB에서 user의 review 정보를 받아 출력<br><br>
+> Review작성 - 별점과 리뷰 작성, DB 업데이트<br>
+> Wishlist - DB에서 user의 wishlist 정보를 받아 출력, 카테고리별 확인가능<br>
 + 한승하<br>
 > Compare, Item detail component 담당<br>
 
