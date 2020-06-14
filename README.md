@@ -13,14 +13,17 @@
 
 ## <div id = "Members">팀 소개</div>
 ### 팀장
-> 오승진<br>
++ 오승진<br>
 
 ### 팀원
-> 나정우<br>
-> 박원호<br>
-> 신정원<br>
-> 신한솔<br>
-> 한승하<br>
++ 나정우<br>
++ 박원호<br>
+> puppeteer & node.js를 이용한 item web crawler 개발<br>
+> 무료 도메인 서비스인 vercel을 이용한 프로젝트 웹 호스트<br>
+> Reactive-native-webview를 이용한 프로젝트 전용 웹뷰어 App 개발<br>
++ 신정원<br>
++ 신한솔<br>
++ 한승하<br>
 
 ## <div id = "Documents">문서 소개</div>
 + /doc: 개발과정에 필요한 문서
