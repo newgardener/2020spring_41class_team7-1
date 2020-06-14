@@ -13,7 +13,7 @@
       </div>
     </v-app-bar>
     <v-container>
-      <div style="overflow:auto; height:700px;"> <!-- height 조절로 스크롤 div 크기 조정가능 -->
+      <div style="overflow:auto; height:600px;"> <!-- height 조절로 스크롤 div 크기 조정가능 -->
         <div class = "block" id = "cate1">
           가전제품<hr>
           <v-col
@@ -22,18 +22,14 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item5.img></v-avatar>
+        <div style = "float: left; width: 15%; text-align: center;">
+            <img :src=item5.img style = "width: 75%; height: 75%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item5.name}}
         </div>
-            <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
+            <div style = "float: left; width: 25%; text-align: center; margin: auto;">
                 <v-row class="ml-2" style="display: flex; justify-content: center;">
                 <div v-for="n in 5"
                                 :key="n">
@@ -50,30 +46,21 @@
                 </v-row>
                 {{item5.score}}
             </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item5.price}}
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item5.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item5.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted5(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
-        </div>
-        <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
-          <v-tooltip bottom>
-              <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item5)  class="ma-2">
+          <v-btn icon v-on:click=Iscompare(item5)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-              </template>
-              <span>Compare</span>
-          </v-tooltip>
-        </v-card>
+        </div>
+        <div style = "float: left; width: 5%;"></div>
                 </v-row>
         </v-col>
         </div>
@@ -87,18 +74,14 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item3.img></v-avatar>
+        <div style = "float: left; width: 15%; text-align: center;">
+            <img :src=item3.img style = "width: 75%; height: 75%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item3.name}}
         </div>
-            <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
+            <div style = "float: left; width: 25%; text-align: center; margin: auto;">
                 <v-row class="ml-2" style="display: flex; justify-content: center;">
                 <div v-for="n in 5"
                                 :key="n">
@@ -115,30 +98,21 @@
                 </v-row>
                 {{item3.score}}
             </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item3.price}}
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item3.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item3.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
-          <v-btn class="mx-2" v-on:click=deleted3(i) fab dark small color="red" >
+          <v-btn class="mx-2" v-on:click=deleted5(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
-        </div>
-        <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
-          <v-tooltip bottom>
-              <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item3)  class="ma-2">
+          <v-btn icon v-on:click=Iscompare(item3)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-              </template>
-              <span>Compare</span>
-          </v-tooltip>
-        </v-card>
+        </div>
+        <div style = "float: left; width: 5%;"></div>
                 </v-row>
         </v-col>
         </div>
@@ -151,19 +125,14 @@
         :key="i"
           >
         <v-row class="ml-2">
-
-        <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item1.img></v-avatar>
+<div style = "float: left; width: 15%; text-align: center;">
+            <img :src=item1.img style = "width: 75%; height: 75%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item1.name}}
         </div>
-            <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
+            <div style = "float: left; width: 25%; text-align: center; margin: auto;">
                 <v-row class="ml-2" style="display: flex; justify-content: center;">
                 <div v-for="n in 5"
                                 :key="n">
@@ -180,30 +149,21 @@
                 </v-row>
                 {{item1.score}}
             </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item1.price}}
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item1.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item1.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
-          <v-btn class="mx-2" v-on:click=deleted1(i) fab dark small color="red" >
+          <v-btn class="mx-2" v-on:click=deleted5(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
-        </div>
-        <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
-          <v-tooltip bottom>
-              <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item1)  class="ma-2">
+          <v-btn icon v-on:click=Iscompare(item1)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-              </template>
-              <span>Compare</span>
-          </v-tooltip>
-        </v-card>
+        </div>
+        <div style = "float: left; width: 5%;"></div>
                 </v-row>
         </v-col>
         </div>
@@ -217,18 +177,14 @@
           >
         <v-row class="ml-2">
 
-        <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item4.img></v-avatar>
+        <div style = "float: left; width: 15%; text-align: center;">
+            <img :src=item4.img style = "width: 75%; height: 75%;">
         </div>
 
         <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item4.name}}
         </div>
-            <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
+            <div style = "float: left; width: 25%; text-align: center; margin: auto;">
                 <v-row class="ml-2" style="display: flex; justify-content: center;">
                 <div v-for="n in 5"
                                 :key="n">
@@ -245,30 +201,21 @@
                 </v-row>
                 {{item4.score}}
             </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
             {{item4.price}}
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item4.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item4.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
-          <v-btn class="mx-2" v-on:click=deleted4(i) fab dark small color="red" >
+          <v-btn class="mx-2" v-on:click=deleted5(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
           </v-btn>
-        </div>
-        <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: auto; width: 5%;">
-          <v-tooltip bottom>
-              <template v-slot:activator="{}">
-                    <v-btn icon v-on:click=Iscompare(item4)  class="ma-2">
+          <v-btn icon v-on:click=Iscompare(item4)  class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
-              </template>
-              <span>Compare</span>
-          </v-tooltip>
-        </v-card>
+        </div>
+        <div style = "float: left; width: 5%;"></div>
                 </v-row>
         </v-col>
         </div>
@@ -283,14 +230,10 @@
         <v-row class="ml-2">
 
         <div style = "float: left; width: 20%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item2.img></v-avatar>
+            <img :src=item2.img style = "width: 75%; height: 75%;">
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item2.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -316,9 +259,6 @@
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item2.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item2.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted2(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
@@ -340,6 +280,10 @@
       </div>
 
     </v-container>
+    <v-footer class="pa-3" fixed>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }} team7</div>
+    </v-footer>
   </div>
 </template>
 
@@ -585,7 +529,6 @@ export default {
            
       
     }
-
 }
 </script>
 
