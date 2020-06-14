@@ -31,9 +31,9 @@
 > 서버리스 배포 플랫폼인 vercel을 이용한 프로젝트 웹 배포<br>
 > Reactive-native-webview를 이용한 프로젝트 전용 웹뷰어 App 개발<br>
 + 신정원<br>
-> signup & login component 개발<br>
-> User info와 firebase 연동<br>
-> 전체 UI/UX 디자인 통일<br>
+> Sign Up & Login component 및 Login Permission 기능 구현<br>
+> irebase DB 전체적인 구조 설계 및 User info와 DB 연동<br>
+> 프로젝트 UI/UX 디자인 통일<br>
 + 신한솔<br>
 > Mypage - 닉네임, 이름, 리뷰 수와 wishlist의 상품 수 출력, 비밀번호 변경 가능<br>
 > Review -  DB에서 user의 review 정보를 받아 출력<br><br>
