@@ -26,10 +26,11 @@
 + 한승하<br>
 
 ## <div id = "Documents">문서 소개</div>
++ /code: 어플리케이션 코드
+> [2020spring_41class_team7-master](https://github.com/skkuse/2020spring_41class_team7/tree/master/code/2020spring_41class_team7-master)<br>
+
 + /doc: 개발과정에 필요한 문서
 > [Requirement Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/Comparewise_Requirement%20Specification.pdf)<br>
 > [Design Specification](https://github.com/skkuse/2020spring_41class_team7/blob/master/doc/CompareWise_Design_Specification.pdf)<br>
-
-+ /code: 어플리케이션 코드
 
 + /workspace: 각자 담당한 부분 코드 공유
