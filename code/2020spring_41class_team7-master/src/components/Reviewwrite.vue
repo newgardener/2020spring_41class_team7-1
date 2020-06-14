@@ -74,6 +74,13 @@ export default {
         x: 0,
         y: 0,
         value: 0,
+        //
+        itemkey: '',
+        
+        total_score: 0,
+        review_volume: 0,
+        itemForm: new Object(),
+        
       }
     },
     methods: {
@@ -85,7 +92,19 @@ export default {
             else {
                 this.$http.post('https://comparewise.firebaseio.com/Review.json', this.form).then(function(data){
                 alert('성공적으로 등록되었습니다.');
-                this.$router.replace(this.$route.query.redirect || '/main');
+                //score 갱신
+                this.total_score = this.total_score + this.form.score;
+                this.itemForm.total_score = this.total_score;
+                
+                this.review_volume++;
+                this.itemForm.review_volume = this.review_volume;
+
+                var avg_score = (this.total_score/this.review_volume).toFixed(1);
+                this.itemForm.avg_score = parseFloat(avg_score);
+                
+                
+                this.$http.put('https://comparewise.firebaseio.com/item/'+this.itemkey+'.json', this.itemForm);
+                this.$router.push(this.$route.query.redirect || '/main');
             })
             }
         }, 
@@ -102,7 +121,7 @@ export default {
           this.$store.commit('loginFalse')
         },
         change (){
-          this.form.score = document.getElementById("grade").value;
+          this.form.score = parseFloat(document.getElementById("grade").value);
         }
     },
     mounted() {
@@ -171,15 +190,22 @@ export default {
                   if(data[key].item_id==this.form.item_id)
                   {
                     var tar = data[key]
+                    this.itemForm = tar
                     this.item_name = tar.item_name
                     this.item_img = tar.img_src
+                    //SCORE 갱신
+                    
+                    this.total_score = data[key].total_score;
+                    this.review_volume = data[key].review_volume;
+                    this.itemkey = key;                    
                   }
                 }
             });
-    }
+     
+    }  
 }
 </script>
-
+4
 <style>
   .block{
     width: 100%;

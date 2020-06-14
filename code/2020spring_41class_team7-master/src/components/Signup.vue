@@ -24,14 +24,13 @@
                 
                 
 
-                <v-card-actions class="justify-center">
+                <v-card-actions @click="checkAccount" class="justify-center">
                     <v-btn color="blue" width="100%" height="50px" style="font-size: 20px">
-                        <button v-on:click.prevent="post">Register</button>
+                        <button >Register</button>
                     </v-btn>
                 </v-card-actions>
             </v-card>
     </v-layout>
-
 
   </div>
     
@@ -64,7 +63,7 @@ export default {
             else if (this.form.password != this.passwordConfirmation) {
                 this.passwordError = true;
                 alert('Error: password is not identical!');
-            } 
+            }
             else {
                 this.$http.post('https://comparewise.firebaseio.com/user.json', this.form).then(function(data){
                 this.submitted = true;
@@ -95,6 +94,23 @@ export default {
         validEmail: function (email) {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
+        },
+        checkAccount: function() {
+            this.$http.get('https://comparewise.firebaseio.com/user.json').then(function(data){
+                return data.json();
+            }).then(function(data){
+                for (let key in data) {
+                    if (data[key].email == this.form.email) {
+                        this.idError = true;
+                    }
+                }
+                if (this.idError) {
+                    alert('Error: This account already exists. choose another one.')
+                }
+                else {
+                    this.post()
+                }
+            })
         }
     }
 }

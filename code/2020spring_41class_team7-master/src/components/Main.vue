@@ -102,7 +102,7 @@
           <v-card flat tile color="#E8EAF6" class="d-flex flex-row-reverse" style="margin: 0 0;">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                    <v-btn icon v-on:click=Iscompare(item) dark v-on="on" class="ma-2">
+                    <v-btn icon v-on:click=Iscompare(item) v-on="on" class="ma-2">
                       <v-icon x-large>mdi-scale-balance</v-icon>
                     </v-btn>
               </template>
@@ -126,6 +126,12 @@
         </v-col>
       </v-row>
     </v-container>
+    <template>
+      <v-snackbar v-model="snackbar_c">
+            {{snackbar_content_c}}
+            <v-btn color="pink" text @click="snackbar_c = false" > Close </v-btn>
+        </v-snackbar>
+    </template>
 
 <!-- Footer -->
     <v-footer class="pa-3" fixed>
@@ -156,8 +162,7 @@ export default {
           this.compare_price1 = 'defult'
           this.compare_price2 = 'defult'
           this.comparecategory1 = 'defult'
-          this.snackbar_content = "동일한 카테고리 아이템만 비교 가능합니다."
-          this.snackbar = true;
+          this.snackbar_c = true;
           return;
         }
         this.compareID2 = item.id
@@ -293,12 +298,14 @@ export default {
         wish_list_date: new Date().toLocaleString
       },
       snackbar_content:"찜한 목록은 Wishlist에서 확인하실 수 있습니다.",
+      snackbar_content_c:"동일한 카테고리의 상품만 비교 가능합니다.",
       //to open dialog
       dialog: false,
       drawer: false,
       tab: null,
       drawer: false,
-      snackbar: false
+      snackbar: false,
+      snackbar_c: false
     }
   },
   created() {
@@ -313,6 +320,7 @@ export default {
       this.setCookie("name", this.getCookie("name"),1);
       eventBus.$emit("loginTrue", this.isTrue);
     }
+    console.log("oncreate")
     this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
                 return data.json();
             }).then(function(data){
@@ -335,8 +343,8 @@ export default {
                 //sort by total_score
                 for(var i=0; i<this.items.length; i++) {
                   //addr에 i 들어가야 함!
-                  var addr = this.items[i].id
-                  this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+addr.toString()+'.json').then(function(data){
+                  var addr = this.items[i].id+"";
+                  this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+addr+'.json').then(function(data){
                       return data.json();
                   }).then(function(data){
                             for (let key in data) {
@@ -367,8 +375,7 @@ export default {
   },
   beforeUpdate(){
     this.getPrice()
-  }
-  
+  },
 }
 
 </script>
