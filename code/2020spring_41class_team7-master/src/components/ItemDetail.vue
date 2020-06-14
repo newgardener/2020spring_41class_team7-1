@@ -31,7 +31,7 @@
             <v-tabs v-model="tab" background-color="deep-purple accent-4" class="elevation-2" dark grow >
             <v-tab>상품설명</v-tab>
             <!--Item 설명 연결 -->
-            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;" width="320px" /></v-tab-item>
+            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;" width="240px" /></v-tab-item>
 
             <v-tab>상품리뷰</v-tab>
             <!--Item review 정보 -->
