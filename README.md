@@ -19,7 +19,7 @@
 + 나정우<br>
 + 박원호<br>
 > puppeteer & node.js를 이용한 item web crawler 개발<br>
-> 무료 도메인 서비스인 vercel을 이용한 프로젝트 웹 호스트<br>
+> 서버리스 배포 플랫폼인 vercel을 이용한 프로젝트 웹 배포<br>
 > Reactive-native-webview를 이용한 프로젝트 전용 웹뷰어 App 개발<br>
 + 신정원<br>
 + 신한솔<br>
