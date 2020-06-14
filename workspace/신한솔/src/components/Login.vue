@@ -1,18 +1,6 @@
  <template>
-    <div class="login">
-        <router-link to="/main">
-            <v-btn 
-            icon 
-            width="auto" 
-            height="auto"  
-            class="ma-1"
-            >
-            <v-avatar size="90">
-            <img src="../assets/ComparewiseLOGO.jpg">
-            </v-avatar>
-            </v-btn>  
-        </router-link> 
-            <v-layout class="justify-center">
+    <div>
+            <v-layout class="justify-center" style="padding: 50px auto">
                 <v-card>
                     <v-img src="../assets/loginLogo.png" width="500px"></v-img>
                     <v-card-title primary-title>
@@ -24,9 +12,9 @@
                         </div>
                     </v-card-title>
 
-                    <v-card-actions class="justify-center">
+                    <v-card-actions v-on:click="login" class="justify-center">
                         <v-btn color="blue" width="100%" height="50px" style="font-size: 20px">
-                            <button v-on:click="login">Login</button>
+                            <button>Login</button>
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -44,8 +32,7 @@ export default {
         return {
             userInfo: {
                 email: '',
-                password: '',
-                nickname: ''
+                password: ''
             },
             isTrue: false,
             idTrue: false,
@@ -53,7 +40,7 @@ export default {
         }
     },
     methods: {
-       setCookie(name, value, day) {
+        setCookie(name, value, day) {
         var date = new Date();
         date.setTime(date.getTime() + day * 60 * 60 * 24 * 1000);
         document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
@@ -117,5 +104,8 @@ export default {
     }
     form, input{
         width: 500px;
+    }
+    div.v-card.v-sheet.theme--light {
+        margin-top: 50px;
     }
 </style>

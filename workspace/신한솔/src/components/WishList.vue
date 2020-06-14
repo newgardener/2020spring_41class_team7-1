@@ -1,54 +1,7 @@
 <template>
-  <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-      <router-link class="routerLink" to="/main">
-        <v-btn icon width="auto" height="auto"  class="ma-1">
-          <v-avatar size="90">
-          <img src="../assets/logo.png">
-          </v-avatar>
-        </v-btn>  
-      </router-link>
-      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
-
-      <v-spacer></v-spacer>
-      
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/signup"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Signup
-        </v-btn>
-      </router-link>
-    </v-app-bar>
+    <div>
     <v-app-bar dense>
-      <div style="width: 100%;">
+      <div style="width: 80%; margin:auto;">
         <select name="category" style="width: 100%" @change="changecate($event)">
             <option value="overall" selected>전체</option>
             <option value="one">가전제품</option>
@@ -59,9 +12,7 @@
         </select>
       </div>
     </v-app-bar>
-
     <v-container>
-      
       <div style="overflow:auto; height:700px;"> <!-- height 조절로 스크롤 div 크기 조정가능 -->
         <div class = "block" id = "cate1">
           가전제품<hr>
@@ -79,7 +30,7 @@
                       ><img :src=item5.img></v-avatar>
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item5.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -104,9 +55,6 @@
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item5.site_name}}
-        </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item5.date}}
         </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted5(i) fab dark small color="red" >
@@ -144,7 +92,7 @@
                       ><img :src=item3.img></v-avatar>
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item3.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -169,9 +117,6 @@
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item3.site_name}}
-        </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item3.date}}
         </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted3(i) fab dark small color="red" >
@@ -209,7 +154,7 @@
                       ><img :src=item1.img></v-avatar>
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item1.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -234,9 +179,6 @@
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item1.site_name}}
-        </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item1.date}}
         </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted1(i) fab dark small color="red" >
@@ -274,7 +216,7 @@
                       ><img :src=item4.img></v-avatar>
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item4.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -299,9 +241,6 @@
         </div>
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item4.site_name}}
-        </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item4.date}}
         </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted4(i) fab dark small color="red" >
@@ -339,7 +278,7 @@
                       ><img :src=item2.img></v-avatar>
         </div>
 
-        <div style = "float: left; width: 20%; text-align: center; margin: auto;">
+        <div style = "float: left; width: 25%; text-align: center; margin: auto;">
             {{item2.name}}
         </div>
             <div style = "float: left; width: 20%; text-align: center; margin: auto; ">
@@ -365,9 +304,6 @@
         <div style = "float: left; width: 10%; text-align: center; margin: auto;">
             {{item2.site_name}}
         </div>
-        <div style = "float: left; width: 10%; text-align: center; margin: auto;">
-            {{item2.date}}
-        </div>
         <div style = "float: left; width: 5%; text-align: center; margin: auto;">
           <v-btn class="mx-2" v-on:click=deleted2(i) fab dark small color="red" >
             <v-icon dark>mdi-minus</v-icon>
@@ -389,22 +325,15 @@
       </div>
 
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-
   </div>
 </template>
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
+// import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
-
 export default {
-    data(){
+      data(){
       return{
           email: "",
           wishnum: 0,
@@ -496,35 +425,40 @@ export default {
           console.log(this.item1[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item1[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted2(num) {
           console.log(this.item2[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item2[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted3(num) {
           console.log(this.item3[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item3[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted4(num) {
           console.log(this.item4[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item4[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
         deleted5(num) {
           console.log(this.item5[num].key)
             this.$http.delete('https://comparewise.firebaseio.com/WishList/'+this.item5[num].key+'.json').then(function(data){
             alert('성공적으로 삭제되었습니다.');
-            location.reload();
+            // location.reload();
+            this.$router.replace(this.$route.query.redirect || '/main');
             })
         },
     },
@@ -629,19 +563,17 @@ export default {
         
       }
                     
-                    })
-                  
+    })            
+  })
               
-              })
-              
-            });
+});
            
       
     }
 }
 </script>
 
-<style scoped>
+<style>
   .block{
     width: 100%;
     background-color:#E8EAF6;

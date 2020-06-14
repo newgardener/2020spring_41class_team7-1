@@ -16,14 +16,14 @@ export const eventBus = new Vue()
 router.push('main')
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBdhbrNHxxRdSH9E3609MoAWx2EOgY544c",
-    authDomain: "comparewise.firebaseapp.com",
-    databaseURL: "https://comparewise.firebaseio.com",
-    projectId: "comparewise",
-    storageBucket: "comparewise.appspot.com",
-    messagingSenderId: "82840898656",
-    appId: "1:82840898656:web:e8bf80980d53b0fcec8705",
-    measurementId: "G-X8DKE8YWW5"
+  apiKey: "AIzaSyBdhbrNHxxRdSH9E3609MoAWx2EOgY544c",
+  authDomain: "comparewise.firebaseapp.com",
+  databaseURL: "https://comparewise.firebaseio.com",
+  projectId: "comparewise",
+  storageBucket: "comparewise.appspot.com",
+  messagingSenderId: "82840898656",
+  appId: "1:82840898656:web:e8bf80980d53b0fcec8705",
+  measurementId: "G-X8DKE8YWW5"
 };
 
 // Initialize Firebase
@@ -32,9 +32,9 @@ Vue.use(VueResource);
 
 
 new Vue({
-    el: '#app',
-    router,
-    store,
-    vuetify,
-    render: h => h(App)
+  el: '#app',
+  router,
+  store,
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')

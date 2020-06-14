@@ -1,66 +1,9 @@
 <template>
   <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-      <router-link class="routerLink" to="/main">
-        <v-btn icon width="auto" height="auto"  class="ma-1">
-          <v-avatar size="90">
-          <img src="../assets/logo.png">
-          </v-avatar>
-        </v-btn>  
-      </router-link>
-      <v-img src="../assets/comparewise.png" width="100px" height="auto"></v-img>
-
-      <v-spacer></v-spacer>
-      
-            <!-- <router-link 
-              class="routerLink" to="/wishlist"
-              v-if="this.$store.state.isLogin"
-            >
-              <v-btn color="primary" dark v-on="on"  icon class="ma-2" >
-                <v-icon x-large>mdi-star-outline</v-icon>
-              </v-btn>
-            </router-link> -->
-
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
-
-      <router-link 
-        class="routerLink" to="/signup"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Signup
-        </v-btn>
-      </router-link>
-    </v-app-bar>
-
     <v-container>
       <div class = "block" id = "first">
-        <div style = "float: left; width: 20%; text-align: center;">
-          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219);" data-width="100px" data-height="100px"></span>
+        <div style = "float: left; width: 15%; text-align: center;">
+          <span class="iconify" data-icon="mdi:account-circle-outline" data-inline="false" style="color: rgb(85, 161, 219); width: 40%; height: 25%;"></span>
         </div>
         <div style = "font-size: 40px;">{{nick}} </div>
         <div>{{name}} 님, 안녕하세요.
@@ -70,13 +13,13 @@
         </div>
       </div>
 
-      <div class = "block" id = "edit" style = "width: 50%; margin: auto; margin-bottom: 20px; display: none;">
-        내 정보 수정<hr><br>
-        <form style="padding-left: 100px;">
+      <div class = "block" id = "edit" style = "width: 75%; margin: auto; margin-bottom: 20px; display: none;">
+        <form style="padding: 10px;">
+          내 정보 수정<hr><br>
           <p>이름 : {{name}}</p>
           <p>별명 : {{nick}}</p>
-          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 200px; border: 1px solid blue;"></p>
-          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 200px; border: 1px solid blue;"></p>
+          <p>현재 비밀번호 : <input type="password" v-model="npassword" style="width: 50%; border: 1px solid black; border-radius: 3px;"></p>
+          <p>새 비밀번호 : <input type="password" v-model="form.password" style="width: 50%; border: 1px solid black; border-radius: 3px;"></p>
         </form>
         
           <div class="my-2" style="margin: auto; width: 15%;">
@@ -96,21 +39,17 @@
         </div>
       </div>
     </v-container>
-
-    <v-footer class="pa-3">
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
-  </div>
+  </div>  
 </template>
+
+
+
 
 <script>
 import firebase from 'firebase';
-import 'expose-loader?$!expose-loader?jQuery!jquery'
 import { eventBus } from "../main"
 export default {
-  
-  data() {
+    data() {
     return {
           form: {
                 password: '',
@@ -140,6 +79,10 @@ export default {
           this.deleteCookie("email")
           this.$store.commit('loginFalse')
         },
+        deleteCookie(name) {
+          var date = new Date();
+          document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+        },
         post: function() {
             console.log(this.form)
             if (!this.npassword || !this.form.password){
@@ -152,7 +95,13 @@ export default {
                 console.log(this.userkey)
                 this.$http.put('https://comparewise.firebaseio.com/user/'+this.userkey+'.json', {"email": this.email, "name": this.name, "nickname": this.nick, "password": this.form.password});
                 alert('비밀번호가 성공적으로 변경되었습니다.\n변경된 비밀번호로 로그인 해주세요.');
-                // logout();
+                //  logout() and direct to login page
+                this.$store.commit('loginFalse')
+                this.deleteCookie("name")
+                this.deleteCookie("email")
+                this.deleteCookie("nick")
+                this.deleteCookie("pw")
+                this.$router.replace(this.$route.query.redirect || '/login');
             }
           },
           edit(){
@@ -228,15 +177,11 @@ export default {
                 }
             });
   }
- /*admin.auth().verifyIdToken(idToken)
-  .then(function(decodedToken) {
-    let uid = decodedToken.uid;
-    // ...
-  }).catch(function(error) {
-    // Handle error
-  });*/
 }
 </script>
+
+
+
 
 <style scoped>
   .block{

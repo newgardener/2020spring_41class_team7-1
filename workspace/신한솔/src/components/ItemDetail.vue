@@ -1,65 +1,12 @@
 <template>
     <div>
-    <v-app-bar
-      color="amber"
-      height="100px"
-    >
-    <router-link class="routerLink" to="/main">
-        <v-btn 
-          icon 
-          width="auto" 
-          height="auto"  hanl
-          class="ma-1"
-          @click="login"
-        >
-          <v-avatar size="90">
-          <img src="../assets/ComparewiseLOGO.jpg">
-          </v-avatar>
-        </v-btn>  
-    </router-link>  
-
-      <v-toolbar-title><h1>Item Detail</h1></v-toolbar-title>
-
-      <v-spacer></v-spacer>
-      
-      <router-link 
-        class="routerLink" to="/wishlist"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-star-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <router-link 
-        class="routerLink" to="/mypage"
-        v-if="this.$store.state.isLogin"
-      >
-        <v-btn icon class="ma-2">
-          <v-icon x-large>mdi-account-outline</v-icon>
-        </v-btn>
-      </router-link>
-      
-      <v-btn @click="logout()" v-if="this.$store.state.isLogin" class="ma-2" outlined>
-        Logout
-      </v-btn>
-          
-      <router-link 
-        class="routerLink" to="/login"
-        v-if="!this.$store.state.isLogin"
-      >
-        <v-btn class="ma-2" outlined>
-          Login
-        </v-btn>
-      </router-link>
-    </v-app-bar>
-    <v-card outlined>
-        <img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;"/>
+    <v-card max-width="80%" style="margin-left: auto; margin-right: auto;">
+        <v-img v-bind:src = item.src style="margin-left: auto; margin-right: auto; display: block;" aspect-ratio="1.0"/>
         <v-card-title class="display-1">{{item.name}}<v-spacer></v-spacer>
         <v-btn icon class="ma-2" v-on:click=writereview()><v-icon x-large color="#BBDEFB">mdi-border-color</v-icon></v-btn>
-        <div><v-btn icon class="ma-2" @click="snackbar = true"><v-icon x-large color="#F48FB1">mdi-heart</v-icon></v-btn>
+        <div><v-btn icon class="ma-2" v-on:click="pushwishlist()"><v-icon x-large color="#F48FB1">mdi-heart</v-icon></v-btn>
         <v-snackbar v-model="snackbar">
-            찜한 상품은 WishList에서 확인할 수 있습니다!
+            {{snackbar_content}}
             <v-btn color="pink" text @click="snackbar = false" > Close </v-btn>
         </v-snackbar></div>
         </v-card-title>
@@ -84,29 +31,41 @@
             <v-tabs v-model="tab" background-color="deep-purple accent-4" class="elevation-2" dark grow >
             <v-tab>상품설명</v-tab>
             <!--Item 설명 연결 -->
-            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;"/></v-tab-item>
+            <v-tab-item><img v-bind:src = item.describer style="margin-left: auto; margin-right: auto; display: block;" width="320px" /></v-tab-item>
+
             <v-tab>상품리뷰</v-tab>
             <!--Item review 정보 -->
-            <v-tab-item><v-card v-for="review in reviews" :key=review outlined>
-              <v-list><v-list-item-content>
-                <div class="overline mb-4">작성일: {{review.review_date}}</div>
-                <v-list-item-title class="headline mb-1">{{review.title}}</v-list-item-title>
-                <v-list-item-subtitle>{{review.nickname}}</v-list-item-subtitle>
-                <v-rating
-                  v-model="review.score"
-                  color="red"
-                  dense
-                  half-increments
-                  readonly
-                  size="10"
-                ></v-rating><br><br>
-                <v-card outlined>{{review.content}}</v-card>
-              </v-list-item-content></v-list>
+              <v-tab-item><v-card v-for="review in reviews" :key=review outlined style="padding: 10px 10px">
+                <v-list><v-list-item-content>
+                  <div class="overline mb-4">작성일: {{review.review_date}} ({{review.nickname}})</div>
+                  <v-list-item-title class="headline mb-1">{{review.title}}</v-list-item-title>
+                    <v-rating
+                    v-model="review.score"
+                    color="red"
+                    dense
+                    half-increments
+                    readonly
+                    size="20"
+                  >
+                  </v-rating> <br>
+                  {{review.content}}
+                </v-list-item-content></v-list>
               </v-card></v-tab-item>
             <v-tab>구매처</v-tab>
             <!--구매처 정보-->
-            <v-tab-item><v-card v-for="seller in sellers" :key="seller" outlined>{{seller.site_name}}<br>
-            가격:{{seller.cost}}<br>{{seller.site_url}}</v-card></v-tab-item>
+              <v-tab-item>
+                <v-card v-for="seller in sellers" :key="seller">
+                  <template style="display: block">
+                    <div v-if="seller.site_name === 'G마켓'"><v-img aspect-ratio="1.0" src="../assets/gmarket.png" alt="Gmarket" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '옥션'"><v-img aspect-ratio="1.0" src="../assets/auction.png" alt="Auction"  style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '11번가'"><v-img aspect-ratio="1.0" src="../assets/11street.png" alt="11번가" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '인터파크'"><v-img aspect-ratio="1.0" src="../assets/interpark.png" alt="Interpark" style="width: 15%; height: 15%;"/></div>
+                    <div v-if="seller.site_name === '쿠팡'"><v-img aspect-ratio="1.0" src="../assets/coupang.png" alt="Coupang" style="width: 15%; height: 15%;"/></div>
+                  </template>
+                  <v-icon x-large>mdi-cash</v-icon>{{seller.cost}}원<br>
+                  <v-icon x-large>mdi-cart</v-icon><a :href="seller.site_url">{{seller.site_url}}</a>
+                </v-card>
+              </v-tab-item>
             </v-tabs>
           </v-card-text>
       </v-card>
@@ -117,83 +76,31 @@
 
 
 <script>
+import firebase from 'firebase'
 export default {
-  created() {
-    this.id = this.$route.params.id
-    this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
-                return data.json();
-            }).then(function(data){
-                for (let key in data) {
-                    var tar = data[key]
-                    if(tar.item_id === this.id){
-                      this.item.category_id =  tar.category_id,
-                      this.item.src = tar.img_src,
-                      this.item.name = tar.item_name,
-                      this.item.id = tar.item_id,
-                      this.item.reviewNum = tar.review_volume,
-                      this.item.score = tar.avg_score,
-                      this.item.total_score = tar.total_score,
-                      this.item.describer = tar.describer
-                    }
-                }
-            })
-    this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+this.id+'.json').then(function(data){
-                return data.json();
-            }).then(function(data){
-                for (let key in data) {
-                                var tar = data[key]
-                                if(tar.item_id === this.id){
-                                var cost = Number(tar.cost.replace(/[^0-9.-]+/g,""))
-                                if(cost < this.item.price) this.item.price = cost
-                                var tmp =
-                                  {
-                                    cost: cost,
-                                    item_id: tar.item_id,
-                                    site_name : tar.site_name,
-                                    site_url: tar.site_url
-                                  }
-                                this.sellers.push(tmp)
-                                }
-                            }
-                        })
-      this.$http.get('https://comparewise.firebaseio.com/Review.json').then(function(data){
-                return data.json();
-            }).then(function(data){
-                for (let key in data) {
-                  var tar = data[key]
-                  if (tar==null)
-                  {
-                    continue;
-                  }
-                  if(tar.item_id === this.id){
-                     var tmp = {
-                       content: tar.content,
-                       title: tar.title,
-                       score: tar.score,
-                       nickname: tar.nickname,
-                       review_date : tar.review_date
-                     }
-                     this.reviews.push(tmp)
-                  }
-                }
-            });
-  },
-    data() {
+  data() {
     return {
-      id:'',
-      search:"",
-      sellers:[],
-      reviews:[],
-      item:{
-        describer:'',
-        category_id:'',
-        src:'',
-        name:'',
-        id:'',
+      snackbar_content:"찜한 목록은 Wishlist에서 확인하실 수 있습니다.",
+      id: '',
+      search: "",
+      sellers: [],
+      reviews: [],
+      tab: "",
+      item: {
+        describer: '',
+        category_id: '',
+        src: '',
+        name: '',
+        id: '',
         price:100000000,
-        reviewNum:'',
-        score:'',
-        total_score:'',
+        reviewNum: '',
+        score: '',
+        total_score: '',
+      },
+      wishlist:{
+        user_id:'',
+        item_id:'',
+        wish_list_date:"0617"
       },
       //to open dialog
       dialog: false,
@@ -201,17 +108,95 @@ export default {
       snackbar: false,
     }
   },
-  methods:{
-      writereview(){
-        this.$router.push({ name: 'Reviewwrite', params:{id:this.id}})
-        console.log(this.$route)
+  created() {
+    this.id = this.$route.params.id
+    this.wishlist.item_id = this.id
+    if(this.$store.state.isLogin){
+        var value = document.cookie.match('(^|;) ?' + "email" + '=([^;]*)(;|$)');
+        value = value? value[2] : null;
+        this.wishlist.user_id = value;
+    }
+    this.$http.get('https://comparewise.firebaseio.com/item.json').then(function(data){
+          return data.json();
+            }).then(function(data){
+                for (let key in data) {
+                    var tar = data[key]
+                    if(tar.item_id === this.id){
+                      this.item.category_id =  tar.category_id
+                      this.item.src = tar.img_src
+                      this.item.name = tar.item_name
+                      this.item.id = tar.item_id
+                      this.item.reviewNum = tar.review_volume
+                      this.item.score = tar.avg_score
+                      this.item.total_score = tar.total_score
+                      this.item.describer = tar.describer
+                    }
+                }
+            })
+    
+    this.$http.get('https://comparewise.firebaseio.com/Review.json').then(function(data){
+      return data.json();
+    }).then(function(data){
+      for (let key in data){
+            var tar = data[key]
+            if (tar == null) continue
+            if (tar.item_id === this.id){
+            var tmp =
+            {
+              nickname: tar.nickname,
+              title: tar.title,
+              review_date: tar.review_date,
+              content: tar.content,
+              score: tar.score,
+              user_id: tar.user_id,
+              item_id: tar.item_id
+            }
+            this.reviews.push(tmp)
+          }
       }
+      console.log(this.reviews)
+    })
+    this.$http.get('https://comparewise.firebaseio.com/ItemSeller/'+this.id+'.json').then(function(data){
+            return data.json();
+        }).then(function(data){
+            for (let key in data) {
+                            var tar = data[key]
+                            if(tar.item_id === this.id){
+                            var cost = Number(tar.cost.replace(/[^0-9.-]+/g,""))
+                            if(cost < this.item.price) this.item.price = cost
+                            var tmp =
+                              {
+                                cost: cost,
+                                item_id: tar.item_id,
+                                site_name : tar.site_name,
+                                site_url: tar.site_url
+                              }
+                            this.sellers.push(tmp)
+                            }
+                        }
+                    })
+  },
+    methods:{
+      writereview(){
+        if(this.$store.state.isLogin){
+          this.$router.push({ name: 'Reviewwrite', params : {id:this.id}})
+        }
+        else{
+            this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
+            this.snackbar = true
+            return;
+        }
+      },
+      pushwishlist:function(){
+        if(this.$store.state.isLogin){
+          console.log("push")
+          this.$http.post('https://comparewise.firebaseio.com/WishList.json', this.wishlist)
+          this.snackbar_content = "찜한 상품은 Wishlist에서 확인하실 수 있습니다."
+          this.$router.replace(this.$route.query.redirect || '/wishlist');
+        }
+        else this.snackbar_content = "로그인 이후 이용하실 수 있습니다."
+        this.snackbar = true
+    }
   }
 }
 </script>
-
-
-
-
-<style>
-</style>
