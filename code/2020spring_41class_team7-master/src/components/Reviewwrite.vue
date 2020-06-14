@@ -3,15 +3,10 @@
     <v-container>
       <div class = "block" id = "first">
         <v-row class="ml-2">
-        <div style = "width: 15%;"></div>
-        <div style = "width: 30%; text-align: center;">
-            <v-avatar
-                        class="mb-5 ml-7"
-                        size="90%"
-                        tile
-                      ><img :src=item_img></v-avatar>
+        <div style = "width: 35%; margin: auto; text-align: center">
+            <img :src=item_img style = "width: 75%; height: 75%;">
         </div>
-        <div style = "margin: auto;">{{item_name}}</div>
+        <div style = "width: 75%; margin: auto; text-align: center;">{{item_name}}</div>
         </v-row>
       </div>
       <form style="width:100%;">
@@ -36,9 +31,9 @@
           </div>
           
         </div>
-        <div class = "block" style="text-align:center;">
-          제목:<input type="text" v-model="form.title" style="border-bottom: 1px solid blue;"><br><br>
-          <textarea rows="10" cols="60" v-model="form.content" placeholder="솔직한 리뷰를 남겨주세요." style="resize: none;"></textarea>
+        <div class = "block" style="text-align:center; ">
+          제목:<input type="text" v-model="form.title" style="border-bottom: 1px solid blue; width: 70%;"><br><br>
+          <textarea rows="10" cols="40" v-model="form.content" placeholder="솔직한 리뷰를 남겨주세요." style=" width: 60%;resize: none;"></textarea>
         </div>
         
       <div class="my-2" style="text-align:center;">
@@ -46,6 +41,10 @@
       </div>
       </form>
     </v-container>
+    <v-footer class="pa-3" fixed>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }} team7</div>
+    </v-footer>
   </div>
 </template>
 
@@ -53,8 +52,6 @@
 import firebase from 'firebase'
 import { eventBus } from "../main"
 import $ from 'jquery'
-
-
 export default {
       data(){
       return{
@@ -98,7 +95,6 @@ export default {
                 
                 this.review_volume++;
                 this.itemForm.review_volume = this.review_volume;
-
                 var avg_score = (this.total_score/this.review_volume).toFixed(1);
                 this.itemForm.avg_score = parseFloat(avg_score);
                 
